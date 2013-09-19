@@ -1,0 +1,30 @@
+{
+  "name": "handlebars-helper",
+  "version": "0.0.0",
+  "description": "A collection of helpers for quick and tasty Handlebars templates",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SparkartGroupInc/handlebars-helpers.git"
+  },
+  "keywords": [
+    "Handlebars",
+    "helpers"
+  ],
+  "author": {
+    "name": "Timothy Kempf",
+    "email": "tim@sparkart.com",
+    "url": "http://sparkart.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SparkartGroupInc/handlebars-helpers/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-browserify": "~1.2.4"
+  }
+}

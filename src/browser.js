@@ -1,0 +1,1 @@
+handlebars_helper = require('../index.js');
