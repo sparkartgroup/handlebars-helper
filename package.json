@@ -4,7 +4,7 @@
   "description": "A collection of helpers for quick and tasty Handlebars templates",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "node test"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,8 @@
   },
   "devDependencies": {
     "grunt": "~0.4.1",
-    "grunt-browserify": "~1.2.4"
+    "grunt-browserify": "~1.2.4",
+    "handlebars": "~1.0.12",
+    "tape": "~1.1.1"
   }
 }

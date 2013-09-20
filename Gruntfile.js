@@ -8,6 +8,11 @@ module.exports = function( grunt ){
 				files: {
 					'handlebars_helper.js': ['src/browser.js']
 				}
+			},
+			test: {
+				files: {
+					'test/assets/test.js': ['test/index.js']
+				}
 			}
 		}
 	});
