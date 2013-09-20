@@ -4,8 +4,23 @@
 
 	<title>Handlebars Helper Test Runner</title>
 
-	<link href="./assets/mocha.css" rel="stylesheet" type="text/css" />
+	<style>
+		html {
+			font-family: monospace;
+		}
+	</style>
 
+	<script>
+		console = console || {};
+		var original_log = console.log;
+		console.log = function( msg ){
+			var txt = document.createTextNode( msg );
+			var br = document.createElement('br');
+			document.body.appendChild( txt );
+			document.body.appendChild( br );
+			original_log.apply( this, arguments );
+		};
+	</script>
 	<script src="./assets/test.js"></script>
 
 </head>
