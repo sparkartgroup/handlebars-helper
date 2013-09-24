@@ -3,9 +3,7 @@ return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requi
 module.exports = require('./lib');
 },{"./lib":3}],2:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
-	string = string || '';
-	string = string.replace( to_replace, replacement );
-	return string;
+	return ( string || '' ).replace( to_replace, replacement );
 };
 },{}],3:[function(require,module,exports){
 var helpers = {

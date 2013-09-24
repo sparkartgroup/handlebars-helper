@@ -2,9 +2,7 @@
 module.exports = require('./lib');
 },{"./lib":3}],2:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
-	string = string || '';
-	string = string.replace( to_replace, replacement );
-	return string;
+	return ( string || '' ).replace( to_replace, replacement );
 };
 },{}],3:[function(require,module,exports){
 var helpers = {
@@ -6415,6 +6413,12 @@ handlebars_helper.help( Handlebars );
 test( 'HH registers helpers', function( t ){
 	t.plan(1);
 	t.ok( Handlebars.helpers.replace instanceof Function, 'replace helper is registered' );
+});
+
+test( 'HH replace helper', function( t ){
+	t.plan(1);
+	var tpl = Handlebars.compile('{{replace "Liquid Snake" "Liquid" "Solid"}}');
+	t.ok( tpl() === 'Solid Snake', 'replaces a string with a string' );
 });
 },{"../index.js":1,"assert":4,"handlebars":14,"tape":25}]},{},[35])
 ;
