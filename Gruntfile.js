@@ -5,6 +5,9 @@ module.exports = function( grunt ){
 	grunt.initConfig({
 		browserify: {
 			hh: {
+				options: {
+					standalone: 'handlebars_helper'
+				},
 				files: {
 					'handlebars_helper.js': ['src/browser.js']
 				}
