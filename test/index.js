@@ -29,3 +29,20 @@ test( 'replace helper', function( t ){
 	var tpl = Handlebars.compile('{{replace "Liquid Snake" "Liquid" "Solid"}}');
 	t.ok( tpl() === 'Solid Snake', 'replaces a string with a string' );
 });
+
+// Collection helpers
+
+test( 'length', function( t ){
+	t.plan(3);
+	var array = [1,2,3];
+	var tpl = Handlebars.compile('{{length this}}');
+	t.ok( tpl( array ) == 3, 'returns array\'s length' );
+	var object = {
+		one: 1,
+		two: 2,
+		three: 3
+	};
+	t.ok( tpl( object ) == 3, 'returns number of properties in object' );
+	var string = 'Metal Gear';
+	t.ok( tpl( string ) == 10, 'returns number of characters in string' );
+});
