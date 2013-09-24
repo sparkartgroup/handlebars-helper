@@ -1,11 +1,10 @@
-handlebars-helpers
-==================
+# Handlebars Helper
 
-A collection of Handlebars Helpers for use with Solidus
+A collection of Handlebars Helpers for use with Solidus. Not that you can't use it elsewhere, mind you.
 
-# String Helpers
+## String Helpers
 
-## Lowercase
+### Lowercase
 
 Converts a string to all lowercase characters.
 
@@ -15,7 +14,7 @@ Converts a string to all lowercase characters.
 liquid!
 ```
 
-## Uppercase
+### Uppercase
 
 Converts a string to all uppercase characters.
 
@@ -25,7 +24,7 @@ Converts a string to all uppercase characters.
 BROTHER!
 ```
 
-## Replace
+### Replace
 
 Replaces part of a string with a string.
 
@@ -35,9 +34,9 @@ Replaces part of a string with a string.
 Solid Snake
 ```
 
-# Collection Helpers
+## Collection Helpers
 
-## Length
+### Length
 
 Returns the length of the array, string, or object.
 
