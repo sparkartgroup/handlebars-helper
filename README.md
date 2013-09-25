@@ -64,19 +64,33 @@ String length: 10
 
 ### Contains
 
-Render something if the specified value is in the array, else render some other thing.
+Render something if the specified value is in the array or object, else render some other thing.
 
 ```javascript
 {
 	array: [ 'Solid', 'Liquid', 'Solidus' ],
-	array2: [ 'Chell', 'GLAdOS', 'Wheatley' ]
+	array2: [ 'Chell', 'GLAdOS', 'Wheatley' ],
+	object: {
+		one: 'Solid',
+		two: 'Liquid',
+		three: 'Solidus'
+	},
+	object2: {
+		one: 'Chell',
+		two: 'GLaDOS',
+		three: 'Wheatley'
+	}
 }
 ```
 
 ```handlebars
 Array contains "Solidus": {{#contains array "Solidus"}}Yup{{else}}Nope{{/contains}}.
 Array2 contains "Solidus": {{#contains array2 "Solidus"}}Yup{{else}}Nope{{/contains}}.
+Object contains "Solidus": {{#contains object "Solidus"}}Yup{{else}}Nope{{/contains}}.
+Object2 contains "Solidus": {{#contains object2 "Solidus"}}Yup{{else}}Nope{{/contains}}.
 
 Array contains "Solidus": Yup.
 Array2 contains "Solidus": Nope.
+Object contains "Solidus": Yup.
+Object2 contains "Solidus": Nope.
 ```
