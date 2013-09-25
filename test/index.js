@@ -72,9 +72,7 @@ test( 'first', function( t ){
 	t.plan(2);
 	var array = ['Solid', 'Liquid', 'Solidus'];
 	var tpl = Handlebars.compile('{{#first this}}{{this}} {{/first}}');
-	console.log( 'tpl result', tpl(array) );
 	t.ok( tpl( array ) == 'Solid ', 'renders data within block one time with first item as context' );
 	var tpl2 = Handlebars.compile('{{#first this 2}}{{this}} {{/first}}');
-	console.log( 'tpl2 result', tpl2(array) );
 	t.ok( tpl2( array ) == 'Solid Liquid ', 'renders data within block twice with first two items as context' );
 });
