@@ -128,5 +128,5 @@ Last item in array: {{#last array}}{{this}} {{/last}}
 Last two items in array: {{#last array 2}}{{this}} {{/last}}
 
 Last item in array: Solid
-Last two items in array: Solidus Liquid
+Last two items in array: Liquid Solidus 
 ```

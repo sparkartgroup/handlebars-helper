@@ -83,5 +83,5 @@ test( 'last', function( t ){
 	var tpl = Handlebars.compile('{{#last this}}{{this}} {{/last}}');
 	t.ok( tpl( array ) == 'Solidus ', 'renders data within block one time with last item as context' );
 	var tpl2 = Handlebars.compile('{{#last this 2}}{{this}} {{/last}}');
-	t.ok( tpl2( array ) == 'Solidus Liquid ', 'renders data within block twice with last two items as context' );
+	t.ok( tpl2( array ) == 'Liquid Solidus ', 'renders data within block twice with last two items as context' );
 });

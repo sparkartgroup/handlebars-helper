@@ -25,7 +25,7 @@ module.exports = function( collection, count, options ){
 	count = ( typeof count === 'number' ) ? count : 1;
 	var result = '';
 	for( var i = 0; i < collection.length; i++ ){
-		result += options.fn( collection[collection.length-(i+1)] );
+		result += options.fn( collection[collection.length-count+i] );
 		if( i + 1 == count ) return result;
 	}
 };
@@ -6544,7 +6544,7 @@ test( 'last', function( t ){
 	var tpl = Handlebars.compile('{{#last this}}{{this}} {{/last}}');
 	t.ok( tpl( array ) == 'Solidus ', 'renders data within block one time with last item as context' );
 	var tpl2 = Handlebars.compile('{{#last this 2}}{{this}} {{/last}}');
-	t.ok( tpl2( array ) == 'Solidus Liquid ', 'renders data within block twice with last two items as context' );
+	t.ok( tpl2( array ) == 'Liquid Solidus ', 'renders data within block twice with last two items as context' );
 });
 },{"../index.js":1,"assert":10,"handlebars":20,"tape":31}]},{},[41])
 ;
