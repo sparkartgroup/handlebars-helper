@@ -61,3 +61,22 @@ Array length: 3
 Object length: 3
 String length: 10
 ```
+
+### Contains
+
+Render something if the specified value is in the array, else render some other thing.
+
+```javascript
+{
+	array: [ 'Solid', 'Liquid', 'Solidus' ],
+	array2: [ 'Chell', 'GLAdOS', 'Wheatley' ]
+}
+```
+
+```handlebars
+Array contains "Solidus": {{#contains array "Solidus"}}Yup{{else}}Nope{{/contains}}.
+Array2 contains "Solidus": {{#contains array2 "Solidus"}}Yup{{else}}Nope{{/contains}}.
+
+Array contains "Solidus": Yup.
+Array2 contains "Solidus": Nope.
+```

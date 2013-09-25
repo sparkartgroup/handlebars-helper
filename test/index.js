@@ -46,3 +46,24 @@ test( 'length', function( t ){
 	var string = 'Metal Gear';
 	t.ok( tpl( string ) == 10, 'returns number of characters in string' );
 });
+
+test( 'contains', function( t ){
+	t.plan(4);
+	var array = ['Solid', 'Liquid', 'Solidus'];
+	var tpl = Handlebars.compile('{{#contains this "Solidus"}}Yup{{else}}Nope{{/contains}}.');
+	t.ok( tpl( array ) === 'Yup.', 'renders data within block when item is in array' );
+	var array2 = ['Chell', 'GLaDOS', 'Wheatley'];
+	t.ok( tpl( array2 ) === 'Nope.', 'renders data within else block when item is not in array' );
+	var object = {
+		one: 'Solid',
+		two: 'Liquid',
+		three: 'Solidus'
+	};
+	t.ok( tpl( object ) === 'Yup.', 'renders data within block when item is in object' );
+	var object2 = {
+		one: 'Chell',
+		two: 'GLaDOS',
+		three: 'Wheatley'
+	};
+	t.ok( tpl( object2 ) === 'Nope.', 'renders data within else block when item is not in object' );
+});
