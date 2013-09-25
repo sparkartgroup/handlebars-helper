@@ -94,3 +94,21 @@ Array2 contains "Solidus": Nope.
 Object contains "Solidus": Yup.
 Object2 contains "Solidus": Nope.
 ```
+
+### First
+
+Render something with the first item in an array. Or render something with the first `count` items in an array, I won't judge.
+
+```javascript
+{
+	array: ['Solid', 'Liquid', 'Solidus']
+}
+```
+
+```handlebars
+First item in array: {{#first array}}{{this}} {{/first}}
+First two items in array: {{#first array 2}}{{this}} {{/first}}
+
+First item in array: Solid
+First two items in array: Solid Liquid
+```
