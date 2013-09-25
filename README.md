@@ -112,3 +112,21 @@ First two items in array: {{#first array 2}}{{this}} {{/first}}
 First item in array: Solid
 First two items in array: Solid Liquid
 ```
+
+### Last
+
+Render something with the last item in an array. Or render something with the last `count` items in an array, it's cool.
+
+```javascript
+{
+	array: ['Solid', 'Liquid', 'Solidus']
+}
+```
+
+```handlebars
+Last item in array: {{#last array}}{{this}} {{/last}}
+Last two items in array: {{#last array 2}}{{this}} {{/last}}
+
+Last item in array: Solid
+Last two items in array: Solidus Liquid
+```

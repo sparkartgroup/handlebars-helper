@@ -76,3 +76,12 @@ test( 'first', function( t ){
 	var tpl2 = Handlebars.compile('{{#first this 2}}{{this}} {{/first}}');
 	t.ok( tpl2( array ) == 'Solid Liquid ', 'renders data within block twice with first two items as context' );
 });
+
+test( 'last', function( t ){
+	t.plan(2);
+	var array = ['Solid', 'Liquid', 'Solidus'];
+	var tpl = Handlebars.compile('{{#last this}}{{this}} {{/last}}');
+	t.ok( tpl( array ) == 'Solidus ', 'renders data within block one time with last item as context' );
+	var tpl2 = Handlebars.compile('{{#last this 2}}{{this}} {{/last}}');
+	t.ok( tpl2( array ) == 'Solidus Liquid ', 'renders data within block twice with last two items as context' );
+});
