@@ -130,3 +130,23 @@ Last two items in array: {{#last array 2}}{{this}} {{/last}}
 Last item in array: Solid
 Last two items in array: Liquid Solidus 
 ```
+
+### Between
+
+Loop through the data in an array between two indexes. If only one index is provided, it is treated as the `start` and it will continue to the end of the array. By the way, these are zero-based indexes, so the first item is `0`, the second is `1`, and so forth. Furthermore, this is an inclusive helper, so it not only gets things between two indexes, it includes them as well.
+
+```javascript
+{
+	array: ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake']
+}
+```
+
+```handlebars
+Between the 3rd item and the last: {{#between this 2}}{{this}} {{/between}}
+Between the 2nd item and the 4th: {{#between this 1 3}}{{this}} {{/between}}
+Between the -4th item and the -1st: {{#between this -4 -1}}{{this}} {{/between}}
+
+Between the 3rd item and the last: Vulcan Raven Decoy Octopus Revolver Ocelot Liquid Snake 
+Between the 2nd item and the 4th: Sniper Wolf Vulcan Raven Decoy Octopus
+Between the -4th item and the -1st: Vulcan Raven Decoy Octopus Revolver Ocelot
+```

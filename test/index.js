@@ -85,3 +85,14 @@ test( 'last', function( t ){
 	var tpl2 = Handlebars.compile('{{#last this 2}}{{this}} {{/last}}');
 	t.ok( tpl2( array ) == 'Liquid Solidus ', 'renders data within block twice with last two items as context' );
 });
+
+test( 'between', function( t ){
+	t.plan(3);
+	var array = ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake'];
+	var tpl = Handlebars.compile('{{#between this 2}}{{this}} {{/between}}');
+	t.ok( tpl( array ) == array[2] +' '+ array[3] +' '+ array[4] +' '+ array[5] +' ', 'renders data within block with the last four items as contexts' );
+	var tpl2 = Handlebars.compile('{{#between this 1 3}}{{this}} {{/between}}');
+	t.ok( tpl2( array ) == array[1] +' '+ array[2] +' '+ array[3] +' ', 'renders data within block with items between index 1 and 3' );
+	var tpl3 = Handlebars.compile('{{#between this -4 -1}}{{this}} {{/between}}');
+	t.ok( tpl3( array ) == array[2] +' '+ array[3] +' '+ array[4] +' ', 'renders data within block with items between index 2 and 4' );
+});
