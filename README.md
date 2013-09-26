@@ -133,7 +133,12 @@ Last two items in array: Liquid Solidus
 
 ### Between
 
-Loop through the data in an array between two indexes. If only one index is provided, it is treated as the `start` and it will continue to the end of the array. By the way, these are zero-based indexes, so the first item is `0`, the second is `1`, and so forth. Furthermore, this is an inclusive helper, so it not only gets things between two indexes, it includes them as well.
+Loop through the data in an array between two indexes. Here's a quick run down:
+
+- If only one index is provided, it is treated as the `start` and it will continue to the end of the array.
+- These are zero-based indexes, so the first item is `0`, the second is `1`, and so forth.
+- This is an inclusive helper, so it not only gets things between two indexes, it includes them as well.
+- Indexes can be negative! Negative indexes count backwards from the end of the array.
 
 ```javascript
 {
