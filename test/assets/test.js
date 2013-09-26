@@ -6568,7 +6568,7 @@ test( 'between', function( t ){
 	var tpl2 = Handlebars.compile('{{#between this 1 3}}{{this}} {{/between}}');
 	t.ok( tpl2( array ) == array[1] +' '+ array[2] +' '+ array[3] +' ', 'renders data within block with items between index 1 and 3' );
 	var tpl3 = Handlebars.compile('{{#between this -4 -1}}{{this}} {{/between}}');
-	t.ok( tpl3( array ) == array[2] +' '+ array[3] +' '+ array[4] +' ', 'renders data within block with items between index 2 and 4' );
+	t.ok( tpl3( array ) == array[2] +' '+ array[3] +' '+ array[4] +' ', 'renders data within block with items between index -4 and -1' );
 });
 },{"../index.js":1,"assert":11,"handlebars":21,"tape":32}]},{},[42])
 ;
