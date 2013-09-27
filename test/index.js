@@ -96,3 +96,14 @@ test( 'between', function( t ){
 	var tpl3 = Handlebars.compile('{{#between this -4 -1}}{{this}} {{/between}}');
 	t.ok( tpl3( array ) == array[2] +' '+ array[3] +' '+ array[4] +' ', 'renders data within block with items between index -4 and -1' );
 });
+
+test( 'range', function( t ){
+	t.plan(3);
+	var array = ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake'];
+	var tpl = Handlebars.compile('{{#range this 2}}{{this}} {{/range}}');
+	t.ok( tpl( array ) == array[2] +' '+ array[3] +' '+ array[4] +' '+ array[5] +' ', 'renders data within block with items 2 through the end' );
+	var tpl2 = Handlebars.compile('{{#range this 1 2}}{{this}} {{/range}}');
+	t.ok( tpl2( array ) == array[1] +' '+ array[2] +' ', 'renders data within block with 2 items starting from index 1' );
+	var tpl3 = Handlebars.compile('{{#range this -3 2}}{{this}} {{/range}}');
+	t.ok( tpl3( array ) == array[3] +' '+ array[4] +' ', 'renders data within block with 2 items starting from index -3' );
+});

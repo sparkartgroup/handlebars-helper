@@ -155,3 +155,28 @@ Between the 3rd item and the last: Vulcan Raven Decoy Octopus Revolver Ocelot Li
 Between the 2nd item and the 4th: Sniper Wolf Vulcan Raven Decoy Octopus
 Between the -4th item and the -1st: Vulcan Raven Decoy Octopus Revolver Ocelot
 ```
+
+### Range
+
+Loop through `amount` data items in an array starting from `index`. Some notes:
+
+- If only the `index` is provided, it will loop through every item from there to the end.
+- The index is zero-based, so the first item is `0`, the second is `1`, and so forth.
+- This is an inclusive helper, so it gets everything beyond the specified index and the item at `index` itself.
+- The `index` can be negative! Negative indexes count backwards from the end of the array.
+
+```javascript
+{
+	array: ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake']
+}
+```
+
+```handlebars
+Range from 3rd item to the end: {{#range this 2}}{{this}} {{/range}}
+Range of 2 items starting from the 2nd item: {{#range this 1 2}}{{this}} {{/range}}
+Range of 2 items starting from the -3rd item: {{#range this -3 2}}{{this}} {{/range}}
+
+Range from 3rd item to the end: Vulcan Raven Decoy Octopus Revolver Ocelot Liquid Snake
+Range of 2 items starting from the 2nd item: Sniper Wolf Vulcan Raven
+Range of 2 items starting from the -3rd item: Decoy Octopus Revolver Ocelot
+```
