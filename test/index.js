@@ -48,24 +48,30 @@ test( 'length', function( t ){
 });
 
 test( 'contains', function( t ){
-	t.plan(4);
-	var array = ['Solid', 'Liquid', 'Solidus'];
+	t.plan(6);
+	var data = {
+		array: ['Solid', 'Liquid', 'Solidus'],
+		array2: ['Chell', 'GLaDOS', 'Wheatley'],
+		object: {
+			one: 'Solid',
+			two: 'Liquid',
+			three: 'Solidus'
+		},
+		object2: {
+			one: 'Chell',
+			two: 'GLaDOS',
+			three: 'Wheatley'
+		},
+		string: 'Solidus Snake',
+		string2: 'Solid Snake'
+	};
 	var tpl = Handlebars.compile('{{#contains this "Solidus"}}Yup{{else}}Nope{{/contains}}.');
-	t.ok( tpl( array ) === 'Yup.', 'renders data within block when item is in array' );
-	var array2 = ['Chell', 'GLaDOS', 'Wheatley'];
-	t.ok( tpl( array2 ) === 'Nope.', 'renders data within else block when item is not in array' );
-	var object = {
-		one: 'Solid',
-		two: 'Liquid',
-		three: 'Solidus'
-	};
-	t.ok( tpl( object ) === 'Yup.', 'renders data within block when item is in object' );
-	var object2 = {
-		one: 'Chell',
-		two: 'GLaDOS',
-		three: 'Wheatley'
-	};
-	t.ok( tpl( object2 ) === 'Nope.', 'renders data within else block when item is not in object' );
+	t.ok( tpl( data.array ) === 'Yup.', 'renders data within block when item is in array' );
+	t.ok( tpl( data.array2 ) === 'Nope.', 'renders else block when item is not in array' );
+	t.ok( tpl( data.object ) === 'Yup.', 'renders data within block when item is in object' );
+	t.ok( tpl( data.object2 ) === 'Nope.', 'renders else block when item is not in object' );
+	t.ok( tpl( data.string ) === 'Yup.', 'renders data within block when substring is in string' );
+	t.ok( tpl( data.string2 ) === 'Nope.', 'renders else block when substring is not in string' );
 });
 
 test( 'first', function( t ){
