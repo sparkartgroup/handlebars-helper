@@ -56,7 +56,9 @@ Returns the length of the array, string, or object.
 Array length: {{length array}}
 Object length: {{length object}}
 String length: {{length string}}
+```
 
+```
 Array length: 3
 Object length: 3
 String length: 10
@@ -92,7 +94,9 @@ Object contains "Solidus": {{#contains object "Solidus"}}Yup{{else}}Nope{{/conta
 Object2 contains "Solidus": {{#contains object2 "Solidus"}}Yup{{else}}Nope{{/contains}}.
 String contains "Solid": {{#contains string "Solidus"}}Yup{{else}}Nope{{/contains}}.
 String2 contains "Solid": {{#contains string2 "Solidus"}}Yup{{else}}Nope{{/contains}}.
+```
 
+```
 Array contains "Solidus": Yup.
 Array2 contains "Solidus": Nope.
 Object contains "Solidus": Yup.
@@ -114,7 +118,9 @@ Render something with the first item in an array. Or render something with the f
 ```handlebars
 First item in array: {{#first array}}{{this}} {{/first}}
 First two items in array: {{#first array 2}}{{this}} {{/first}}
+```
 
+```
 First item in array: Solid
 First two items in array: Solid Liquid
 ```
@@ -132,7 +138,9 @@ Render something with the last item in an array. Or render something with the la
 ```handlebars
 Last item in array: {{#last array}}{{this}} {{/last}}
 Last two items in array: {{#last array 2}}{{this}} {{/last}}
+```
 
+```
 Last item in array: Solid
 Last two items in array: Liquid Solidus 
 ```
@@ -156,7 +164,9 @@ Loop through the data in an array between two indexes. Here's a quick run down:
 Between the 3rd item and the last: {{#between this 2}}{{this}} {{/between}}
 Between the 2nd item and the 4th: {{#between this 1 3}}{{this}} {{/between}}
 Between the -4th item and the -1st: {{#between this -4 -1}}{{this}} {{/between}}
+```
 
+```
 Between the 3rd item and the last: Vulcan Raven Decoy Octopus Revolver Ocelot Liquid Snake 
 Between the 2nd item and the 4th: Sniper Wolf Vulcan Raven Decoy Octopus
 Between the -4th item and the -1st: Vulcan Raven Decoy Octopus Revolver Ocelot
@@ -181,7 +191,9 @@ Loop through `amount` data items in an array starting from `index`. Some notes:
 Range from 3rd item to the end: {{#range this 2}}{{this}} {{/range}}
 Range of 2 items starting from the 2nd item: {{#range this 1 2}}{{this}} {{/range}}
 Range of 2 items starting from the -3rd item: {{#range this -3 2}}{{this}} {{/range}}
+```
 
+```
 Range from 3rd item to the end: Vulcan Raven Decoy Octopus Revolver Ocelot Liquid Snake
 Range of 2 items starting from the 2nd item: Sniper Wolf Vulcan Raven
 Range of 2 items starting from the -3rd item: Decoy Octopus Revolver Ocelot
@@ -205,7 +217,9 @@ Render a human friendly string denoting how long ago the supplied date was.
 Ago for right now: {{ago now}}
 Ago for earlier: {{ago earlier}}
 Ago for way earlier: {{ago way_earlier}}
+```
 
+```
 Ago for right now: Just now
 Ago for earlier: 6 hours ago
 Ago for way earlier: 30 days ago
