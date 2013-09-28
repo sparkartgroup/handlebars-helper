@@ -1,6 +1,29 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":11}],2:[function(require,module,exports){
+},{"./lib":12}],2:[function(require,module,exports){
+// Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
+var YEAR = 60 * 60 * 24 * 365;
+var MONTH = 60 * 60 * 24 * 30;
+var DAY = 60 * 60 * 24;
+var HOUR = 60 * 60;
+
+module.exports = function( date ){
+	date = new Date( date );
+	var seconds = Math.floor( ( new Date() - date ) / 1000 );
+	var interval = Math.floor( seconds / YEAR );
+	if( interval > 1 ) return interval +' years ago';
+	interval = Math.floor( seconds / MONTH );
+	if( interval > 1 ) return interval +' months ago';
+	interval = Math.floor( seconds / DAY );
+	if( interval > 1 ) return interval +' days ago';
+	interval = Math.floor( seconds / HOUR );
+	if( interval > 1 ) return interval +' hours ago';
+	interval = Math.floor( seconds / 60 );
+	if( interval > 1 ) return interval +' minutes ago';
+	if( Math.floor( seconds ) <= 1 ) return 'Just now';
+	else return Math.floor( seconds ) +' seconds ago';
+};
+},{}],3:[function(require,module,exports){
 module.exports = function( collection, start, end, options ){
 	options = options || end;
 	if( typeof start !== 'number' ) return;
@@ -12,7 +35,7 @@ module.exports = function( collection, start, end, options ){
 	}
 	return result;
 };
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = function( collection, item, options ){
 	// string check
 	if( typeof collection === 'string' ){
@@ -31,7 +54,7 @@ module.exports = function( collection, item, options ){
 	}
 	return options.inverse();
 };
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -41,7 +64,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -51,7 +74,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports = function( collection ){
 	if( collection.length ) return collection.length;
 	var length = 0;
@@ -62,11 +85,11 @@ module.exports = function( collection ){
 	}
 	return length;
 };
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toLowerCase();	
 };
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = function( collection, start, amount, options ){
 	options = options || amount;
 	if( typeof start !== 'number' ) return;
@@ -78,15 +101,15 @@ module.exports = function( collection, start, amount, options ){
 	}
 	return result;
 };
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -98,7 +121,9 @@ var helpers = {
 	first: require('./helpers/first.js'),
 	last: require('./helpers/last.js'),
 	between: require('./helpers/between.js'),
-	range: require('./helpers/range.js')
+	range: require('./helpers/range.js'),
+	// date
+	ago: require('./helpers/ago.js')
 };
 
 module.exports.help = function( Handlebars ){
@@ -106,7 +131,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/between.js":2,"./helpers/contains.js":3,"./helpers/first.js":4,"./helpers/last.js":5,"./helpers/length.js":6,"./helpers/lowercase.js":7,"./helpers/range.js":8,"./helpers/replace.js":9,"./helpers/uppercase.js":10}],12:[function(require,module,exports){
+},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/first.js":5,"./helpers/last.js":6,"./helpers/length.js":7,"./helpers/lowercase.js":8,"./helpers/range.js":9,"./helpers/replace.js":10,"./helpers/uppercase.js":11}],13:[function(require,module,exports){
 // UTILITY
 var util = require('util');
 var Buffer = require("buffer").Buffer;
@@ -420,7 +445,7 @@ assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
 
 assert.ifError = function(err) { if (err) {throw err;}};
 
-},{"buffer":19,"util":17}],13:[function(require,module,exports){
+},{"buffer":20,"util":18}],14:[function(require,module,exports){
 var process=require("__browserify_process");if (!process.EventEmitter) process.EventEmitter = function () {};
 
 var EventEmitter = exports.EventEmitter = process.EventEmitter;
@@ -616,10 +641,10 @@ EventEmitter.listenerCount = function(emitter, type) {
   return ret;
 };
 
-},{"__browserify_process":21}],14:[function(require,module,exports){
+},{"__browserify_process":22}],15:[function(require,module,exports){
 // nothing to see here... no file methods for the browser
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var process=require("__browserify_process");function filter (xs, fn) {
     var res = [];
     for (var i = 0; i < xs.length; i++) {
@@ -798,7 +823,7 @@ exports.relative = function(from, to) {
 
 exports.sep = '/';
 
-},{"__browserify_process":21}],16:[function(require,module,exports){
+},{"__browserify_process":22}],17:[function(require,module,exports){
 var events = require('events');
 var util = require('util');
 
@@ -919,7 +944,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":13,"util":17}],17:[function(require,module,exports){
+},{"events":14,"util":18}],18:[function(require,module,exports){
 var events = require('events');
 
 exports.isArray = isArray;
@@ -1266,7 +1291,7 @@ exports.format = function(f) {
   return str;
 };
 
-},{"events":13}],18:[function(require,module,exports){
+},{"events":14}],19:[function(require,module,exports){
 exports.readIEEE754 = function(buffer, offset, isBE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -1352,7 +1377,7 @@ exports.writeIEEE754 = function(buffer, value, offset, isBE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var assert = require('assert');
 exports.Buffer = Buffer;
 exports.SlowBuffer = Buffer;
@@ -2435,7 +2460,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
   writeDouble(this, value, offset, true, noAssert);
 };
 
-},{"./buffer_ieee754":18,"assert":12,"base64-js":20}],20:[function(require,module,exports){
+},{"./buffer_ieee754":19,"assert":13,"base64-js":21}],21:[function(require,module,exports){
 (function (exports) {
 	'use strict';
 
@@ -2521,7 +2546,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
 	module.exports.fromByteArray = uint8ToBase64;
 }());
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2575,7 +2600,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -2620,7 +2645,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":23,"./handlebars/compiler":27,"./handlebars/runtime":31,"./handlebars/utils":32,"fs":14}],23:[function(require,module,exports){
+},{"./handlebars/base":24,"./handlebars/compiler":28,"./handlebars/runtime":32,"./handlebars/utils":33,"fs":15}],24:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -2788,7 +2813,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -2928,7 +2953,7 @@ return Handlebars;
 };
 
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -2951,7 +2976,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":28}],26:[function(require,module,exports){
+},{"./parser":29}],27:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -4258,7 +4283,7 @@ return Handlebars;
 
 
 
-},{"./base":25}],27:[function(require,module,exports){
+},{"./base":26}],28:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -4276,7 +4301,7 @@ return Handlebars;
 
 };
 
-},{"./ast":24,"./compiler":26,"./printer":29,"./visitor":30}],28:[function(require,module,exports){
+},{"./ast":25,"./compiler":27,"./printer":30,"./visitor":31}],29:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -4761,7 +4786,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -4901,7 +4926,7 @@ return Handlebars;
 };
 
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -4921,7 +4946,7 @@ return Handlebars;
 
 
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -5029,7 +5054,7 @@ return Handlebars;
 
 };
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -5114,7 +5139,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 var process=require("__browserify_process");var createDefaultStream = require('./lib/default_stream');
 var Test = require('./lib/test');
 var createResultStream = require('./lib/results');
@@ -5242,7 +5267,7 @@ function createHarness (conf_) {
     return test;
 }
 
-},{"./lib/default_stream":34,"./lib/results":35,"./lib/test":36,"__browserify_process":21}],34:[function(require,module,exports){
+},{"./lib/default_stream":35,"./lib/results":36,"./lib/test":37,"__browserify_process":22}],35:[function(require,module,exports){
 var Stream = require('stream');
 
 module.exports = function () {
@@ -5274,7 +5299,7 @@ module.exports = function () {
     return out;
 };
 
-},{"stream":16}],35:[function(require,module,exports){
+},{"stream":17}],36:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream');
 var json = typeof JSON === 'object' ? JSON : require('jsonify');
 var through = require('through');
@@ -5486,7 +5511,7 @@ function getNextTest(results) {
     } while (results.tests.length !== 0)
 }
 
-},{"__browserify_process":21,"jsonify":39,"stream":16,"through":42}],36:[function(require,module,exports){
+},{"__browserify_process":22,"jsonify":40,"stream":17,"through":43}],37:[function(require,module,exports){
 var process=require("__browserify_process"),__dirname="/../node_modules/tape/lib";var Stream = require('stream');
 var deepEqual = require('deep-equal');
 var defined = require('defined');
@@ -5856,7 +5881,7 @@ Test.prototype.doesNotThrow = function (fn, expected, msg, extra) {
 
 // vim: set softtabstop=4 shiftwidth=4:
 
-},{"__browserify_process":21,"deep-equal":37,"defined":38,"events":13,"path":15,"stream":16,"util":17}],37:[function(require,module,exports){
+},{"__browserify_process":22,"deep-equal":38,"defined":39,"events":14,"path":16,"stream":17,"util":18}],38:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var Object_keys = typeof Object.keys === 'function'
     ? Object.keys
@@ -5942,18 +5967,18 @@ function objEquiv(a, b) {
   return true;
 }
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 module.exports = function () {
     for (var i = 0; i < arguments.length; i++) {
         if (arguments[i] !== undefined) return arguments[i];
     }
 };
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 exports.parse = require('./lib/parse');
 exports.stringify = require('./lib/stringify');
 
-},{"./lib/parse":40,"./lib/stringify":41}],40:[function(require,module,exports){
+},{"./lib/parse":41,"./lib/stringify":42}],41:[function(require,module,exports){
 var at, // The index of the current character
     ch, // The current character
     escapee = {
@@ -6228,7 +6253,7 @@ module.exports = function (source, reviver) {
     }({'': result}, '')) : result;
 };
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     gap,
@@ -6384,7 +6409,7 @@ module.exports = function (value, replacer, space) {
     return str('', {'': value});
 };
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream')
 
 // through
@@ -6494,11 +6519,18 @@ function through (write, end, opts) {
 }
 
 
-},{"__browserify_process":21,"stream":16}],43:[function(require,module,exports){
+},{"__browserify_process":22,"stream":17}],44:[function(require,module,exports){
 var assert = require('assert');
 var test = require('tape');
 var Handlebars = require('handlebars');
 var handlebars_helper = require('../index.js');
+
+var YEAR = 60 * 60 * 24 * 365 * 1000;
+var MONTH = 60 * 60 * 24 * 30 * 1000;
+var DAY = 60 * 60 * 24 * 1000;
+var HOUR = 60 * 60 * 1000;
+var MINUTE = 60 * 1000;
+var SECOND = 1000;
 
 handlebars_helper.help( Handlebars );
 
@@ -6610,5 +6642,26 @@ test( 'range', function( t ){
 	var tpl3 = Handlebars.compile('{{#range this -3 2}}{{this}} {{/range}}');
 	t.ok( tpl3( array ) == array[3] +' '+ array[4] +' ', 'renders data within block with 2 items starting from index -3' );
 });
-},{"../index.js":1,"assert":12,"handlebars":22,"tape":33}]},{},[43])
+
+// Date helpers
+
+test( 'ago', function( t ){
+	t.plan(7);
+	var now = new Date;
+	var seconds_ago = new Date( now - SECOND * 30 );
+	var minutes_ago = new Date( now - MINUTE * 30 );
+	var hours_ago = new Date( now - HOUR * 12 );
+	var days_ago = new Date( now - DAY * 10 );
+	var months_ago = new Date( now - MONTH * 6 );
+	var year_ago = new Date( now - YEAR * 2 );
+	var tpl = Handlebars.compile('{{ago this}}');
+	t.ok( tpl( now ) === 'Just now', 'renders "Just now" for a date within a second of now' );
+	t.ok( tpl( seconds_ago ) === '30 seconds ago', 'renders "30 seconds ago" for a date 30 seconds in the past' );
+	t.ok( tpl( minutes_ago ) === '30 minutes ago', 'renders "30 minutes ago" for a date 30 minutes in the past' );
+	t.ok( tpl( hours_ago ) === '12 hours ago', 'renders "12 hours ago" for a date 12 hours in the past' );
+	t.ok( tpl( days_ago ) === '10 days ago', 'renders "10 days ago" for a date 10 days in the past' );
+	t.ok( tpl( months_ago ) === '6 months ago', 'renders "6 months ago" for a date 6 months in the past' );
+	t.ok( tpl( year_ago ) === '2 years ago', 'renders "2 years ago" for a date 1 year in the past' );
+});
+},{"../index.js":1,"assert":13,"handlebars":23,"tape":34}]},{},[44])
 ;

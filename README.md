@@ -186,3 +186,27 @@ Range from 3rd item to the end: Vulcan Raven Decoy Octopus Revolver Ocelot Liqui
 Range of 2 items starting from the 2nd item: Sniper Wolf Vulcan Raven
 Range of 2 items starting from the -3rd item: Decoy Octopus Revolver Ocelot
 ```
+
+## Date Helpers
+
+### Ago
+
+Render a human friendly string denoting how long ago the supplied date was.
+
+```javascript
+{
+	now: new Date,
+	earlier: new Date + 1000 * 60 * 60 * 6,
+	way_earlier: new Date + 1000 * 60 * 60 * 24 * 30
+}
+```
+
+```handlebars
+Ago for right now: {{ago now}}
+Ago for earlier: {{ago earlier}}
+Ago for way earlier: {{ago way_earlier}}
+
+Ago for right now: Just now
+Ago for earlier: 6 hours ago
+Ago for way earlier: 30 days ago
+```

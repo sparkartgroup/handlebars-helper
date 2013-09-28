@@ -3,6 +3,13 @@ var test = require('tape');
 var Handlebars = require('handlebars');
 var handlebars_helper = require('../index.js');
 
+var YEAR = 60 * 60 * 24 * 365 * 1000;
+var MONTH = 60 * 60 * 24 * 30 * 1000;
+var DAY = 60 * 60 * 24 * 1000;
+var HOUR = 60 * 60 * 1000;
+var MINUTE = 60 * 1000;
+var SECOND = 1000;
+
 handlebars_helper.help( Handlebars );
 
 test( 'HH registers helpers', function( t ){
@@ -112,4 +119,25 @@ test( 'range', function( t ){
 	t.ok( tpl2( array ) == array[1] +' '+ array[2] +' ', 'renders data within block with 2 items starting from index 1' );
 	var tpl3 = Handlebars.compile('{{#range this -3 2}}{{this}} {{/range}}');
 	t.ok( tpl3( array ) == array[3] +' '+ array[4] +' ', 'renders data within block with 2 items starting from index -3' );
+});
+
+// Date helpers
+
+test( 'ago', function( t ){
+	t.plan(7);
+	var now = new Date;
+	var seconds_ago = new Date( now - SECOND * 30 );
+	var minutes_ago = new Date( now - MINUTE * 30 );
+	var hours_ago = new Date( now - HOUR * 12 );
+	var days_ago = new Date( now - DAY * 10 );
+	var months_ago = new Date( now - MONTH * 6 );
+	var year_ago = new Date( now - YEAR * 2 );
+	var tpl = Handlebars.compile('{{ago this}}');
+	t.ok( tpl( now ) === 'Just now', 'renders "Just now" for a date within a second of now' );
+	t.ok( tpl( seconds_ago ) === '30 seconds ago', 'renders "30 seconds ago" for a date 30 seconds in the past' );
+	t.ok( tpl( minutes_ago ) === '30 minutes ago', 'renders "30 minutes ago" for a date 30 minutes in the past' );
+	t.ok( tpl( hours_ago ) === '12 hours ago', 'renders "12 hours ago" for a date 12 hours in the past' );
+	t.ok( tpl( days_ago ) === '10 days ago', 'renders "10 days ago" for a date 10 days in the past' );
+	t.ok( tpl( months_ago ) === '6 months ago', 'renders "6 months ago" for a date 6 months in the past' );
+	t.ok( tpl( year_ago ) === '2 years ago', 'renders "2 years ago" for a date 1 year in the past' );
 });
