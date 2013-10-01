@@ -10,7 +10,9 @@ Converts a string to all lowercase characters.
 
 ```handlebars
 {{lowercase "LIQUID!"}}
+```
 
+```
 liquid!
 ```
 
@@ -20,7 +22,9 @@ Converts a string to all uppercase characters.
 
 ```handlebars
 {{uppercase "brother!"}}
+```
 
+```
 BROTHER!
 ```
 
@@ -30,7 +34,9 @@ Replaces part of a string with a string.
 
 ```handlebars
 {{replace "Liquid Snake" "Liquid" "Solid"}}
+```
 
+```
 Solid Snake
 ```
 
