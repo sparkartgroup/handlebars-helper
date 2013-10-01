@@ -242,9 +242,9 @@ Render a date or date-like value however you wanna. Uses [samsonjs/strftime](htt
 
 ```handlebars
 {{formatDate dates[0] "%A, %B %o %Y"}}
-{{formatDate this "%b. %o %Y"}}
-{{formatDate this "%A at %-l:%M%p"}}
-{{formatDate this "%v"}}
+{{formatDate dates[1] "%b. %o %Y"}}
+{{formatDate dates[2] "%A at %-l:%M%p"}}
+{{formatDate dates[3] "%v"}}
 ```
 
 ```
