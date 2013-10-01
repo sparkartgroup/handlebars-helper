@@ -1,6 +1,6 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":15}],2:[function(require,module,exports){
+},{"./lib":16}],2:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -55,6 +55,10 @@ module.exports = function( collection, item, options ){
 	return options.inverse();
 };
 },{}],5:[function(require,module,exports){
+module.exports = function( string ){
+	return encodeURIComponent( string );	
+};
+},{}],6:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -64,14 +68,14 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var strftime = require('strftime');
 
 module.exports = function( date_string, format ){
 	var date = new Date( date_string );
 	return strftime( format, date );
 };
-},{"strftime":37}],7:[function(require,module,exports){
+},{"strftime":38}],8:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -81,7 +85,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = function( collection ){
 	if( collection.length ) return collection.length;
 	var length = 0;
@@ -92,11 +96,11 @@ module.exports = function( collection ){
 	}
 	return length;
 };
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toLowerCase();	
 };
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = function( collection, start, amount, options ){
 	options = options || amount;
 	if( typeof start !== 'number' ) return;
@@ -108,11 +112,11 @@ module.exports = function( collection, start, amount, options ){
 	}
 	return result;
 };
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 // Simple shuffling method based off of http://bost.ocks.org/mike/shuffle/
 var shuffle = function( array ){
 	var i = array.length, j, swap;
@@ -133,11 +137,11 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports = function( collection, key, value, limit, options ){
 	options = options || limit;
 	if( typeof limit !== 'number' ) limit = Infinity;
@@ -152,12 +156,13 @@ module.exports = function( collection, key, value, limit, options ){
 	}
 	return result;
 };
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
 	uppercase: require('./helpers/uppercase.js'),
 	replace: require('./helpers/replace.js'),
+	encode: require('./helpers/encode.js'),
 	// collection
 	length: require('./helpers/length.js'),
 	contains: require('./helpers/contains.js'),
@@ -177,7 +182,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/first.js":5,"./helpers/formatDate.js":6,"./helpers/last.js":7,"./helpers/length.js":8,"./helpers/lowercase.js":9,"./helpers/range.js":10,"./helpers/replace.js":11,"./helpers/shuffle.js":12,"./helpers/uppercase.js":13,"./helpers/where.js":14}],16:[function(require,module,exports){
+},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/encode.js":5,"./helpers/first.js":6,"./helpers/formatDate.js":7,"./helpers/last.js":8,"./helpers/length.js":9,"./helpers/lowercase.js":10,"./helpers/range.js":11,"./helpers/replace.js":12,"./helpers/shuffle.js":13,"./helpers/uppercase.js":14,"./helpers/where.js":15}],17:[function(require,module,exports){
 // UTILITY
 var util = require('util');
 var Buffer = require("buffer").Buffer;
@@ -491,7 +496,7 @@ assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
 
 assert.ifError = function(err) { if (err) {throw err;}};
 
-},{"buffer":23,"util":21}],17:[function(require,module,exports){
+},{"buffer":24,"util":22}],18:[function(require,module,exports){
 var process=require("__browserify_process");if (!process.EventEmitter) process.EventEmitter = function () {};
 
 var EventEmitter = exports.EventEmitter = process.EventEmitter;
@@ -687,10 +692,10 @@ EventEmitter.listenerCount = function(emitter, type) {
   return ret;
 };
 
-},{"__browserify_process":25}],18:[function(require,module,exports){
+},{"__browserify_process":26}],19:[function(require,module,exports){
 // nothing to see here... no file methods for the browser
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 var process=require("__browserify_process");function filter (xs, fn) {
     var res = [];
     for (var i = 0; i < xs.length; i++) {
@@ -869,7 +874,7 @@ exports.relative = function(from, to) {
 
 exports.sep = '/';
 
-},{"__browserify_process":25}],20:[function(require,module,exports){
+},{"__browserify_process":26}],21:[function(require,module,exports){
 var events = require('events');
 var util = require('util');
 
@@ -990,7 +995,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":17,"util":21}],21:[function(require,module,exports){
+},{"events":18,"util":22}],22:[function(require,module,exports){
 var events = require('events');
 
 exports.isArray = isArray;
@@ -1337,7 +1342,7 @@ exports.format = function(f) {
   return str;
 };
 
-},{"events":17}],22:[function(require,module,exports){
+},{"events":18}],23:[function(require,module,exports){
 exports.readIEEE754 = function(buffer, offset, isBE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -1423,7 +1428,7 @@ exports.writeIEEE754 = function(buffer, value, offset, isBE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var assert = require('assert');
 exports.Buffer = Buffer;
 exports.SlowBuffer = Buffer;
@@ -2506,7 +2511,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
   writeDouble(this, value, offset, true, noAssert);
 };
 
-},{"./buffer_ieee754":22,"assert":16,"base64-js":24}],24:[function(require,module,exports){
+},{"./buffer_ieee754":23,"assert":17,"base64-js":25}],25:[function(require,module,exports){
 (function (exports) {
 	'use strict';
 
@@ -2592,7 +2597,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
 	module.exports.fromByteArray = uint8ToBase64;
 }());
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2646,7 +2651,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -2691,7 +2696,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":27,"./handlebars/compiler":31,"./handlebars/runtime":35,"./handlebars/utils":36,"fs":18}],27:[function(require,module,exports){
+},{"./handlebars/base":28,"./handlebars/compiler":32,"./handlebars/runtime":36,"./handlebars/utils":37,"fs":19}],28:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -2859,7 +2864,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -2999,7 +3004,7 @@ return Handlebars;
 };
 
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -3022,7 +3027,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":32}],30:[function(require,module,exports){
+},{"./parser":33}],31:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -4329,7 +4334,7 @@ return Handlebars;
 
 
 
-},{"./base":29}],31:[function(require,module,exports){
+},{"./base":30}],32:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -4347,7 +4352,7 @@ return Handlebars;
 
 };
 
-},{"./ast":28,"./compiler":30,"./printer":33,"./visitor":34}],32:[function(require,module,exports){
+},{"./ast":29,"./compiler":31,"./printer":34,"./visitor":35}],33:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -4832,7 +4837,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -4972,7 +4977,7 @@ return Handlebars;
 };
 
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -4992,7 +4997,7 @@ return Handlebars;
 
 
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -5100,7 +5105,7 @@ return Handlebars;
 
 };
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -5185,7 +5190,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 //
 // strftime
 // github.com/samsonjs/strftime
@@ -5432,7 +5437,7 @@ return Handlebars;
 
 }());
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 var process=require("__browserify_process");var createDefaultStream = require('./lib/default_stream');
 var Test = require('./lib/test');
 var createResultStream = require('./lib/results');
@@ -5560,7 +5565,7 @@ function createHarness (conf_) {
     return test;
 }
 
-},{"./lib/default_stream":39,"./lib/results":40,"./lib/test":41,"__browserify_process":25}],39:[function(require,module,exports){
+},{"./lib/default_stream":40,"./lib/results":41,"./lib/test":42,"__browserify_process":26}],40:[function(require,module,exports){
 var Stream = require('stream');
 
 module.exports = function () {
@@ -5592,7 +5597,7 @@ module.exports = function () {
     return out;
 };
 
-},{"stream":20}],40:[function(require,module,exports){
+},{"stream":21}],41:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream');
 var json = typeof JSON === 'object' ? JSON : require('jsonify');
 var through = require('through');
@@ -5804,7 +5809,7 @@ function getNextTest(results) {
     } while (results.tests.length !== 0)
 }
 
-},{"__browserify_process":25,"jsonify":44,"stream":20,"through":47}],41:[function(require,module,exports){
+},{"__browserify_process":26,"jsonify":45,"stream":21,"through":48}],42:[function(require,module,exports){
 var process=require("__browserify_process"),__dirname="/../node_modules/tape/lib";var Stream = require('stream');
 var deepEqual = require('deep-equal');
 var defined = require('defined');
@@ -6174,7 +6179,7 @@ Test.prototype.doesNotThrow = function (fn, expected, msg, extra) {
 
 // vim: set softtabstop=4 shiftwidth=4:
 
-},{"__browserify_process":25,"deep-equal":42,"defined":43,"events":17,"path":19,"stream":20,"util":21}],42:[function(require,module,exports){
+},{"__browserify_process":26,"deep-equal":43,"defined":44,"events":18,"path":20,"stream":21,"util":22}],43:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var Object_keys = typeof Object.keys === 'function'
     ? Object.keys
@@ -6260,18 +6265,18 @@ function objEquiv(a, b) {
   return true;
 }
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 module.exports = function () {
     for (var i = 0; i < arguments.length; i++) {
         if (arguments[i] !== undefined) return arguments[i];
     }
 };
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 exports.parse = require('./lib/parse');
 exports.stringify = require('./lib/stringify');
 
-},{"./lib/parse":45,"./lib/stringify":46}],45:[function(require,module,exports){
+},{"./lib/parse":46,"./lib/stringify":47}],46:[function(require,module,exports){
 var at, // The index of the current character
     ch, // The current character
     escapee = {
@@ -6546,7 +6551,7 @@ module.exports = function (source, reviver) {
     }({'': result}, '')) : result;
 };
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     gap,
@@ -6702,7 +6707,7 @@ module.exports = function (value, replacer, space) {
     return str('', {'': value});
 };
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream')
 
 // through
@@ -6812,7 +6817,7 @@ function through (write, end, opts) {
 }
 
 
-},{"__browserify_process":25,"stream":20}],48:[function(require,module,exports){
+},{"__browserify_process":26,"stream":21}],49:[function(require,module,exports){
 var assert = require('assert');
 var test = require('tape');
 var Handlebars = require('handlebars');
@@ -6850,6 +6855,12 @@ test( 'replace helper', function( t ){
 	t.plan(1);
 	var tpl = Handlebars.compile('{{replace "Liquid Snake" "Liquid" "Solid"}}');
 	t.ok( tpl() === 'Solid Snake', 'replaces a string with a string' );
+});
+
+test( 'encode helper', function( t ){
+	t.plan(1);
+	var tpl = Handlebars.compile('{{encode "http://sparkart.com"}}');
+	t.ok( tpl() === 'http%3A%2F%2Fsparkart.com', 'URI encodes string' );
 });
 
 // Collection helpers
@@ -7008,5 +7019,5 @@ test( 'formatDate', function( t ){
 	var tpl4 = Handlebars.compile('{{formatDate this "%v"}}');
 	t.ok( tpl4( dates[3] ) === '30-Sep-2013', 'date successfully formatted' );
 });
-},{"../index.js":1,"assert":16,"handlebars":26,"tape":38}]},{},[48])
+},{"../index.js":1,"assert":17,"handlebars":27,"tape":39}]},{},[49])
 ;
