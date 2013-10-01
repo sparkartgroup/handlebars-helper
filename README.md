@@ -34,6 +34,18 @@ Replaces part of a string with a string.
 Solid Snake
 ```
 
+### Encode
+
+URI encodes a string. Useful for links that use URLs as query parameters.
+
+```handlebars
+{{encode "http://sparkart.com"}}
+```
+
+```
+http%3A%2F%2Fsparkart.com
+```
+
 ## Collection Helpers
 
 ### Length

@@ -37,6 +37,12 @@ test( 'replace helper', function( t ){
 	t.ok( tpl() === 'Solid Snake', 'replaces a string with a string' );
 });
 
+test( 'encode helper', function( t ){
+	t.plan(1);
+	var tpl = Handlebars.compile('{{encode "http://sparkart.com"}}');
+	t.ok( tpl() === 'http%3A%2F%2Fsparkart.com', 'URI encodes string' );
+});
+
 // Collection helpers
 
 test( 'length', function( t ){
