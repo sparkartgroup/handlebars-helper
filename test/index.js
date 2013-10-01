@@ -141,3 +141,21 @@ test( 'ago', function( t ){
 	t.ok( tpl( months_ago ) === '6 months ago', 'renders "6 months ago" for a date 6 months in the past' );
 	t.ok( tpl( year_ago ) === '2 years ago', 'renders "2 years ago" for a date 1 year in the past' );
 });
+
+test( 'formatDate', function( t ){
+	t.plan(4);
+	var dates = [
+		'2013-09-30T15:00:00.340Z',
+		'2013/09/30 15:00:00 +0000',
+		'Mon Sep 30 2013 15:00:00 GMT-0700 (PDT)',
+		1380578400000
+	];
+	var tpl = Handlebars.compile('{{formatDate this "%A, %B %o %Y"}}');
+	t.ok( tpl( dates[0] ) === 'Monday, September 30th 2013', 'date successfully formatted' );
+	var tpl2 = Handlebars.compile('{{formatDate this "%b. %o %Y"}}');
+	t.ok( tpl2( dates[1] ) === 'Sep. 30th 2013', 'date successfully formatted' );
+	var tpl3 = Handlebars.compile('{{formatDate this "%A at %-l:%M%p"}}');
+	t.ok( tpl3( dates[2] ) === 'Monday at 3:00PM', 'date successfully formatted' );
+	var tpl4 = Handlebars.compile('{{formatDate this "%v"}}');
+	t.ok( tpl4( dates[3] ) === '30-Sep-2013', 'date successfully formatted' );
+});

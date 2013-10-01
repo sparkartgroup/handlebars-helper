@@ -224,3 +224,32 @@ Ago for right now: Just now
 Ago for earlier: 6 hours ago
 Ago for way earlier: 30 days ago
 ```
+
+### formatDate
+
+Render a date or date-like value however you wanna. Uses [samsonjs/strftime](https://github.com/samsonjs/strftime) under the hood, so check out its documentation for [the list of format options](https://github.com/samsonjs/strftime#supported-specifiers).
+
+```javascript
+{
+	dates: [
+		'2013-09-30T15:00:00.340Z',
+		'2013/09/30 15:00:00 +0000',
+		'Mon Sep 30 2013 15:00:00 GMT-0700 (PDT)',
+		1380578400000
+	]
+}
+```
+
+```handlebars
+{{formatDate dates[0] "%A, %B %o %Y"}}
+{{formatDate this "%b. %o %Y"}}
+{{formatDate this "%A at %-l:%M%p"}}
+{{formatDate this "%v"}}
+```
+
+```
+Monday, September 30th 2013
+Sep. 30th 2013
+Monday at 3:00PM
+30-Sep-2013
+```

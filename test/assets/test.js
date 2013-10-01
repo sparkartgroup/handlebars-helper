@@ -1,6 +1,6 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":12}],2:[function(require,module,exports){
+},{"./lib":13}],2:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -65,6 +65,13 @@ module.exports = function( collection, count, options ){
 	}
 };
 },{}],6:[function(require,module,exports){
+var strftime = require('strftime');
+
+module.exports = function( date_string, format ){
+	var date = new Date( date_string );
+	return strftime( format, date );
+};
+},{"strftime":35}],7:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -74,7 +81,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 module.exports = function( collection ){
 	if( collection.length ) return collection.length;
 	var length = 0;
@@ -85,11 +92,11 @@ module.exports = function( collection ){
 	}
 	return length;
 };
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toLowerCase();	
 };
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 module.exports = function( collection, start, amount, options ){
 	options = options || amount;
 	if( typeof start !== 'number' ) return;
@@ -101,15 +108,15 @@ module.exports = function( collection, start, amount, options ){
 	}
 	return result;
 };
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -123,7 +130,8 @@ var helpers = {
 	between: require('./helpers/between.js'),
 	range: require('./helpers/range.js'),
 	// date
-	ago: require('./helpers/ago.js')
+	ago: require('./helpers/ago.js'),
+	formatDate: require('./helpers/formatDate.js')
 };
 
 module.exports.help = function( Handlebars ){
@@ -131,7 +139,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/first.js":5,"./helpers/last.js":6,"./helpers/length.js":7,"./helpers/lowercase.js":8,"./helpers/range.js":9,"./helpers/replace.js":10,"./helpers/uppercase.js":11}],13:[function(require,module,exports){
+},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/first.js":5,"./helpers/formatDate.js":6,"./helpers/last.js":7,"./helpers/length.js":8,"./helpers/lowercase.js":9,"./helpers/range.js":10,"./helpers/replace.js":11,"./helpers/uppercase.js":12}],14:[function(require,module,exports){
 // UTILITY
 var util = require('util');
 var Buffer = require("buffer").Buffer;
@@ -445,7 +453,7 @@ assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
 
 assert.ifError = function(err) { if (err) {throw err;}};
 
-},{"buffer":20,"util":18}],14:[function(require,module,exports){
+},{"buffer":21,"util":19}],15:[function(require,module,exports){
 var process=require("__browserify_process");if (!process.EventEmitter) process.EventEmitter = function () {};
 
 var EventEmitter = exports.EventEmitter = process.EventEmitter;
@@ -641,10 +649,10 @@ EventEmitter.listenerCount = function(emitter, type) {
   return ret;
 };
 
-},{"__browserify_process":22}],15:[function(require,module,exports){
+},{"__browserify_process":23}],16:[function(require,module,exports){
 // nothing to see here... no file methods for the browser
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 var process=require("__browserify_process");function filter (xs, fn) {
     var res = [];
     for (var i = 0; i < xs.length; i++) {
@@ -823,7 +831,7 @@ exports.relative = function(from, to) {
 
 exports.sep = '/';
 
-},{"__browserify_process":22}],17:[function(require,module,exports){
+},{"__browserify_process":23}],18:[function(require,module,exports){
 var events = require('events');
 var util = require('util');
 
@@ -944,7 +952,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":14,"util":18}],18:[function(require,module,exports){
+},{"events":15,"util":19}],19:[function(require,module,exports){
 var events = require('events');
 
 exports.isArray = isArray;
@@ -1291,7 +1299,7 @@ exports.format = function(f) {
   return str;
 };
 
-},{"events":14}],19:[function(require,module,exports){
+},{"events":15}],20:[function(require,module,exports){
 exports.readIEEE754 = function(buffer, offset, isBE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -1377,7 +1385,7 @@ exports.writeIEEE754 = function(buffer, value, offset, isBE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 var assert = require('assert');
 exports.Buffer = Buffer;
 exports.SlowBuffer = Buffer;
@@ -2460,7 +2468,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
   writeDouble(this, value, offset, true, noAssert);
 };
 
-},{"./buffer_ieee754":19,"assert":13,"base64-js":21}],21:[function(require,module,exports){
+},{"./buffer_ieee754":20,"assert":14,"base64-js":22}],22:[function(require,module,exports){
 (function (exports) {
 	'use strict';
 
@@ -2546,7 +2554,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
 	module.exports.fromByteArray = uint8ToBase64;
 }());
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2600,7 +2608,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -2645,7 +2653,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":24,"./handlebars/compiler":28,"./handlebars/runtime":32,"./handlebars/utils":33,"fs":15}],24:[function(require,module,exports){
+},{"./handlebars/base":25,"./handlebars/compiler":29,"./handlebars/runtime":33,"./handlebars/utils":34,"fs":16}],25:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -2813,7 +2821,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -2953,7 +2961,7 @@ return Handlebars;
 };
 
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -2976,7 +2984,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":29}],27:[function(require,module,exports){
+},{"./parser":30}],28:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -4283,7 +4291,7 @@ return Handlebars;
 
 
 
-},{"./base":26}],28:[function(require,module,exports){
+},{"./base":27}],29:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -4301,7 +4309,7 @@ return Handlebars;
 
 };
 
-},{"./ast":25,"./compiler":27,"./printer":30,"./visitor":31}],29:[function(require,module,exports){
+},{"./ast":26,"./compiler":28,"./printer":31,"./visitor":32}],30:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -4786,7 +4794,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -4926,7 +4934,7 @@ return Handlebars;
 };
 
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -4946,7 +4954,7 @@ return Handlebars;
 
 
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -5054,7 +5062,7 @@ return Handlebars;
 
 };
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -5139,7 +5147,254 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
+//
+// strftime
+// github.com/samsonjs/strftime
+// @_sjs
+//
+// Copyright 2010 - 2013 Sami Samhuri <sami@samhuri.net>
+//
+// MIT License
+// http://sjs.mit-license.org
+//
+
+;(function() {
+
+  //// Export the API
+  var namespace;
+
+  // CommonJS / Node module
+  if (typeof module !== 'undefined') {
+    namespace = module.exports = strftime;
+  }
+
+  // Browsers and other environments
+  else {
+    // Get the global object. Works in ES3, ES5, and ES5 strict mode.
+    namespace = (function(){ return this || (1,eval)('this') }());
+  }
+
+  namespace.strftime = strftime;
+  namespace.strftimeUTC = strftime.strftimeUTC = strftimeUTC;
+  namespace.localizedStrftime = strftime.localizedStrftime = localizedStrftime;
+
+  ////
+
+  function words(s) { return (s || '').split(' '); }
+
+  var DefaultLocale =
+  { days: words('Sunday Monday Tuesday Wednesday Thursday Friday Saturday')
+  , shortDays: words('Sun Mon Tue Wed Thu Fri Sat')
+  , months: words('January February March April May June July August September October November December')
+  , shortMonths: words('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec')
+  , AM: 'AM'
+  , PM: 'PM'
+  , am: 'am'
+  , pm: 'pm'
+  };
+
+  function strftime(fmt, d, locale) {
+    return _strftime(fmt, d, locale, false);
+  }
+
+  function strftimeUTC(fmt, d, locale) {
+    return _strftime(fmt, d, locale, true);
+  }
+
+  function localizedStrftime(locale) {
+    return function(fmt, d) {
+      return strftime(fmt, d, locale);
+    };
+  }
+
+  // locale is an object with the same structure as DefaultLocale
+  function _strftime(fmt, d, locale, _useUTC) {
+    // d and locale are optional so check if d is really the locale
+    if (d && !quacksLikeDate(d)) {
+      locale = d;
+      d = undefined;
+    }
+    d = d || new Date();
+    locale = locale || DefaultLocale;
+    locale.formats = locale.formats || {};
+    var msDelta = 0;
+    if (_useUTC) {
+      msDelta = (d.getTimezoneOffset() || 0) * 60000;
+      d = new Date(d.getTime() + msDelta);
+    }
+
+    // Most of the specifiers supported by C's strftime, and some from Ruby.
+    // Some other syntax extensions from Ruby are supported: %-, %_, and %0
+    // to pad with nothing, space, or zero (respectively).
+    return fmt.replace(/%([-_0]?.)/g, function(_, c) {
+      var mod, padding;
+      if (c.length == 2) {
+        mod = c[0];
+        // omit padding
+        if (mod == '-') {
+          padding = '';
+        }
+        // pad with space
+        else if (mod == '_') {
+          padding = ' ';
+        }
+        // pad with zero
+        else if (mod == '0') {
+          padding = '0';
+        }
+        else {
+          // unrecognized, return the format
+          return _;
+        }
+        c = c[1];
+      }
+      switch (c) {
+        case 'A': return locale.days[d.getDay()];
+        case 'a': return locale.shortDays[d.getDay()];
+        case 'B': return locale.months[d.getMonth()];
+        case 'b': return locale.shortMonths[d.getMonth()];
+        case 'C': return pad(Math.floor(d.getFullYear() / 100), padding);
+        case 'D': return _strftime(locale.formats.D || '%m/%d/%y', d, locale);
+        case 'd': return pad(d.getDate(), padding);
+        case 'e': return d.getDate();
+        case 'F': return _strftime(locale.formats.F || '%Y-%m-%d', d, locale);
+        case 'H': return pad(d.getHours(), padding);
+        case 'h': return locale.shortMonths[d.getMonth()];
+        case 'I': return pad(hours12(d), padding);
+        case 'j':
+          var y=new Date(d.getFullYear(), 0, 1);
+          var day = Math.ceil((d.getTime() - y.getTime()) / (1000*60*60*24));
+          return pad(day, 3);
+        case 'k': return pad(d.getHours(), padding == null ? ' ' : padding);
+        case 'L': return pad(Math.floor(d.getTime() % 1000), 3);
+        case 'l': return pad(hours12(d), padding == null ? ' ' : padding);
+        case 'M': return pad(d.getMinutes(), padding);
+        case 'm': return pad(d.getMonth() + 1, padding);
+        case 'n': return '\n';
+        case 'o': return String(d.getDate()) + ordinal(d.getDate());
+        case 'P': return d.getHours() < 12 ? locale.am : locale.pm;
+        case 'p': return d.getHours() < 12 ? locale.AM : locale.PM;
+        case 'R': return _strftime(locale.formats.R || '%H:%M', d, locale);
+        case 'r': return _strftime(locale.formats.r || '%I:%M:%S %p', d, locale);
+        case 'S': return pad(d.getSeconds(), padding);
+        case 's': return Math.floor((d.getTime() - msDelta) / 1000);
+        case 'T': return _strftime(locale.formats.T || '%H:%M:%S', d, locale);
+        case 't': return '\t';
+        case 'U': return pad(weekNumber(d, 'sunday'), padding);
+        case 'u':
+          var day = d.getDay();
+          return day == 0 ? 7 : day; // 1 - 7, Monday is first day of the week
+        case 'v': return _strftime(locale.formats.v || '%e-%b-%Y', d, locale);
+        case 'W': return pad(weekNumber(d, 'monday'), padding);
+        case 'w': return d.getDay(); // 0 - 6, Sunday is first day of the week
+        case 'Y': return d.getFullYear();
+        case 'y':
+          var y = String(d.getFullYear());
+          return y.slice(y.length - 2);
+        case 'Z':
+          if (_useUTC) {
+            return "GMT";
+          }
+          else {
+            var tz = d.toString().match(/\((\w+)\)/);
+            return tz && tz[1] || '';
+          }
+        case 'z':
+          if (_useUTC) {
+            return "+0000";
+          }
+          else {
+            var off = d.getTimezoneOffset();
+            return (off < 0 ? '+' : '-') + pad(Math.abs(off / 60)) + pad(off % 60);
+          }
+        default: return c;
+      }
+    });
+  }
+
+  var RequiredDateMethods = ['getTime', 'getTimezoneOffset', 'getDay', 'getDate', 'getMonth', 'getFullYear', 'getYear', 'getHours', 'getMinutes', 'getSeconds'];
+  function quacksLikeDate(x) {
+    var i = 0
+      , n = RequiredDateMethods.length
+      ;
+    for (i = 0; i < n; ++i) {
+      if (typeof x[RequiredDateMethods[i]] != 'function') {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Default padding is '0' and default length is 2, both are optional.
+  function pad(n, padding, length) {
+    // pad(n, <length>)
+    if (typeof padding === 'number') {
+      length = padding;
+      padding = '0';
+    }
+
+    // Defaults handle pad(n) and pad(n, <padding>)
+    if (padding == null) {
+      padding = '0';
+    }
+    length = length || 2;
+
+    var s = String(n);
+    // padding may be an empty string, don't loop forever if it is
+    if (padding) {
+      while (s.length < length) s = padding + s;
+    }
+    return s;
+  }
+
+  function hours12(d) {
+    var hour = d.getHours();
+    if (hour == 0) hour = 12;
+    else if (hour > 12) hour -= 12;
+    return hour;
+  }
+
+  // Get the ordinal suffix for a number: st, nd, rd, or th
+  function ordinal(n) {
+    var i = n % 10
+      , ii = n % 100
+      ;
+    if ((ii >= 11 && ii <= 13) || i === 0 || i >= 4) {
+      return 'th';
+    }
+    switch (i) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+    }
+  }
+
+  // firstWeekday: 'sunday' or 'monday', default is 'sunday'
+  //
+  // Pilfered & ported from Ruby's strftime implementation.
+  function weekNumber(d, firstWeekday) {
+    firstWeekday = firstWeekday || 'sunday';
+
+    // This works by shifting the weekday back by one day if we
+    // are treating Monday as the first day of the week.
+    var wday = d.getDay();
+    if (firstWeekday == 'monday') {
+      if (wday == 0) // Sunday
+        wday = 6;
+      else
+        wday--;
+    }
+    var firstDayOfYear = new Date(d.getFullYear(), 0, 1)
+      , yday = (d - firstDayOfYear) / 86400000
+      , weekNum = (yday + 7 - wday) / 7
+      ;
+    return Math.floor(weekNum);
+  }
+
+}());
+
+},{}],36:[function(require,module,exports){
 var process=require("__browserify_process");var createDefaultStream = require('./lib/default_stream');
 var Test = require('./lib/test');
 var createResultStream = require('./lib/results');
@@ -5267,7 +5522,7 @@ function createHarness (conf_) {
     return test;
 }
 
-},{"./lib/default_stream":35,"./lib/results":36,"./lib/test":37,"__browserify_process":22}],35:[function(require,module,exports){
+},{"./lib/default_stream":37,"./lib/results":38,"./lib/test":39,"__browserify_process":23}],37:[function(require,module,exports){
 var Stream = require('stream');
 
 module.exports = function () {
@@ -5299,7 +5554,7 @@ module.exports = function () {
     return out;
 };
 
-},{"stream":17}],36:[function(require,module,exports){
+},{"stream":18}],38:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream');
 var json = typeof JSON === 'object' ? JSON : require('jsonify');
 var through = require('through');
@@ -5511,7 +5766,7 @@ function getNextTest(results) {
     } while (results.tests.length !== 0)
 }
 
-},{"__browserify_process":22,"jsonify":40,"stream":17,"through":43}],37:[function(require,module,exports){
+},{"__browserify_process":23,"jsonify":42,"stream":18,"through":45}],39:[function(require,module,exports){
 var process=require("__browserify_process"),__dirname="/../node_modules/tape/lib";var Stream = require('stream');
 var deepEqual = require('deep-equal');
 var defined = require('defined');
@@ -5881,7 +6136,7 @@ Test.prototype.doesNotThrow = function (fn, expected, msg, extra) {
 
 // vim: set softtabstop=4 shiftwidth=4:
 
-},{"__browserify_process":22,"deep-equal":38,"defined":39,"events":14,"path":16,"stream":17,"util":18}],38:[function(require,module,exports){
+},{"__browserify_process":23,"deep-equal":40,"defined":41,"events":15,"path":17,"stream":18,"util":19}],40:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var Object_keys = typeof Object.keys === 'function'
     ? Object.keys
@@ -5967,18 +6222,18 @@ function objEquiv(a, b) {
   return true;
 }
 
-},{}],39:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 module.exports = function () {
     for (var i = 0; i < arguments.length; i++) {
         if (arguments[i] !== undefined) return arguments[i];
     }
 };
 
-},{}],40:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 exports.parse = require('./lib/parse');
 exports.stringify = require('./lib/stringify');
 
-},{"./lib/parse":41,"./lib/stringify":42}],41:[function(require,module,exports){
+},{"./lib/parse":43,"./lib/stringify":44}],43:[function(require,module,exports){
 var at, // The index of the current character
     ch, // The current character
     escapee = {
@@ -6253,7 +6508,7 @@ module.exports = function (source, reviver) {
     }({'': result}, '')) : result;
 };
 
-},{}],42:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     gap,
@@ -6409,7 +6664,7 @@ module.exports = function (value, replacer, space) {
     return str('', {'': value});
 };
 
-},{}],43:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream')
 
 // through
@@ -6519,7 +6774,7 @@ function through (write, end, opts) {
 }
 
 
-},{"__browserify_process":22,"stream":17}],44:[function(require,module,exports){
+},{"__browserify_process":23,"stream":18}],46:[function(require,module,exports){
 var assert = require('assert');
 var test = require('tape');
 var Handlebars = require('handlebars');
@@ -6663,5 +6918,23 @@ test( 'ago', function( t ){
 	t.ok( tpl( months_ago ) === '6 months ago', 'renders "6 months ago" for a date 6 months in the past' );
 	t.ok( tpl( year_ago ) === '2 years ago', 'renders "2 years ago" for a date 1 year in the past' );
 });
-},{"../index.js":1,"assert":13,"handlebars":23,"tape":34}]},{},[44])
+
+test( 'formatDate', function( t ){
+	t.plan(4);
+	var dates = [
+		'2013-09-30T15:00:00.340Z',
+		'2013/09/30 15:00:00 +0000',
+		'Mon Sep 30 2013 15:00:00 GMT-0700 (PDT)',
+		1380578400000
+	];
+	var tpl = Handlebars.compile('{{formatDate this "%A, %B %o %Y"}}');
+	t.ok( tpl( dates[0] ) === 'Monday, September 30th 2013', 'date successfully formatted' );
+	var tpl2 = Handlebars.compile('{{formatDate this "%b. %o %Y"}}');
+	t.ok( tpl2( dates[1] ) === 'Sep. 30th 2013', 'date successfully formatted' );
+	var tpl3 = Handlebars.compile('{{formatDate this "%A at %-l:%M%p"}}');
+	t.ok( tpl3( dates[2] ) === 'Monday at 3:00PM', 'date successfully formatted' );
+	var tpl4 = Handlebars.compile('{{formatDate this "%v"}}');
+	t.ok( tpl4( dates[3] ) === '30-Sep-2013', 'date successfully formatted' );
+});
+},{"../index.js":1,"assert":14,"handlebars":24,"tape":36}]},{},[46])
 ;
