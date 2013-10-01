@@ -121,6 +121,29 @@ test( 'range', function( t ){
 	t.ok( tpl3( array ) == array[3] +' '+ array[4] +' ', 'renders data within block with 2 items starting from index -3' );
 });
 
+test( 'where', function( t ){
+	t.plan(3);
+	var array = [{
+		title: 'Metal Gear Solid',
+		system: 'Playstation',
+		release_year: 1998
+	}, {
+		title: 'Metal Gear Solid 2',
+		system: 'Playstation 2',
+		release_year: 2001
+	}, {
+		title: 'Metal Gear Solid 3',
+		system: 'Playstation 2',
+		release_year: 2004
+	}];
+	var tpl = Handlebars.compile('{{#where this "release_year" 1998}}{{title}}{{/where}}');
+	t.ok( tpl( array ) === array[0].title, 'renders data within block with items matching key/value pair' );
+	var tpl2 = Handlebars.compile('{{#where this "system" "Playstation 2"}}{{title}} {{/where}}');
+	t.ok( tpl2( array ) === array[1].title +' '+ array[2].title +' ', 'renders data within block with items matching key/value pair' );
+	var tpl3 = Handlebars.compile('{{#where this "system" "Playstation 2" 1}}{{title}}{{/where}}');
+	t.ok( tpl3( array ) === array[1].title, 'renders data within block with one item matching key/value pair' );
+});
+
 // Date helpers
 
 test( 'ago', function( t ){

@@ -199,6 +199,40 @@ Range of 2 items starting from the 2nd item: Sniper Wolf Vulcan Raven
 Range of 2 items starting from the -3rd item: Decoy Octopus Revolver Ocelot
 ```
 
+### Where
+
+Loop through an array of objects and render when the `value` at `key` matches the supplied values. You can also provide a `limit` to stop looping after you've had enough.
+
+```javascript
+{
+	array: [{
+		title: 'Metal Gear Solid',
+		system: 'Playstation',
+		release_year: 1998
+	}, {
+		title: 'Metal Gear Solid 2',
+		system: 'Playstation 2',
+		release_year: 2001
+	}, {
+		title: 'Metal Gear Solid 3',
+		system: 'Playstation 2',
+		release_year: 2004
+	}]
+}
+```
+
+```handlebars
+Where release_year is 1998: {{#where this "release_year" 1998}}{{title}}{{/where}}
+Where system is "Playstation 2": {{#where this "system" "Playstation 2"}}{{title}} {{/where}}
+Where system is "Playstation 2", limit 1: {{#where this "system" "Playstation 2" 1}}{{title}}{{/where}}
+```
+
+```
+Where release_year is 1998: Metal Gear Solid
+Where system is "Playstation 2": Metal Gear Solid 2 Metal Gear Solid 3 
+Where system is "Playstation 2", limit 1: Metal Gear Solid 2
+```
+
 ## Date Helpers
 
 ### Ago
