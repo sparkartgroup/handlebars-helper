@@ -1,7 +1,7 @@
 (function(e){if("function"==typeof bootstrap)bootstrap("handlebars_helper",e);else if("object"==typeof exports)module.exports=e();else if("function"==typeof define&&define.amd)define(e);else if("undefined"!=typeof ses){if(!ses.ok())return;ses.makeHandlebarshelper=e}else"undefined"!=typeof window?window.handlebarshelper=e():global.handlebarshelper=e()})(function(){var define,ses,bootstrap,module,exports;
 return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":13}],2:[function(require,module,exports){
+},{"./lib":15}],2:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -72,7 +72,7 @@ module.exports = function( date_string, format ){
 	var date = new Date( date_string );
 	return strftime( format, date );
 };
-},{"strftime":14}],7:[function(require,module,exports){
+},{"strftime":16}],7:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -114,10 +114,46 @@ module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
 },{}],12:[function(require,module,exports){
+// Simple shuffling method based off of http://bost.ocks.org/mike/shuffle/
+var shuffle = function( array ){
+	var i = array.length, j, swap;
+	while( i ){
+		j = Math.floor( Math.random() * i-- );
+		swap = array[i];
+		array[i] = array[j];
+		array[j] = swap;
+	}
+	return array;
+};
+
+module.exports = function( collection, options ){
+	var shuffled = shuffle( collection );
+	var result = '';
+	for( var i = 0; i < shuffled.length; i++ ){
+		result += options.fn( shuffled[i] );
+	}
+	return result;
+};
+},{}],13:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
+module.exports = function( collection, key, value, limit, options ){
+	options = options || limit;
+	if( typeof limit !== 'number' ) limit = Infinity;
+	var matches = 0;
+	var result = '';
+	for( var i = 0; i < collection.length; i++ ){
+		if( collection[i][key] === value ){
+			result += options.fn( collection[i] );
+			matches++;
+			if( matches === limit ) return result;
+		}
+	}
+	return result;
+};
+},{}],15:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -130,6 +166,8 @@ var helpers = {
 	last: require('./helpers/last.js'),
 	between: require('./helpers/between.js'),
 	range: require('./helpers/range.js'),
+	where: require('./helpers/where.js'),
+	shuffle: require('./helpers/shuffle.js'),
 	// date
 	ago: require('./helpers/ago.js'),
 	formatDate: require('./helpers/formatDate.js')
@@ -140,7 +178,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/first.js":5,"./helpers/formatDate.js":6,"./helpers/last.js":7,"./helpers/length.js":8,"./helpers/lowercase.js":9,"./helpers/range.js":10,"./helpers/replace.js":11,"./helpers/uppercase.js":12}],14:[function(require,module,exports){
+},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/first.js":5,"./helpers/formatDate.js":6,"./helpers/last.js":7,"./helpers/length.js":8,"./helpers/lowercase.js":9,"./helpers/range.js":10,"./helpers/replace.js":11,"./helpers/shuffle.js":12,"./helpers/uppercase.js":13,"./helpers/where.js":14}],16:[function(require,module,exports){
 //
 // strftime
 // github.com/samsonjs/strftime
@@ -387,8 +425,8 @@ module.exports.help = function( Handlebars ){
 
 }());
 
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 handlebars_helper = require('../index.js');
-},{"../index.js":1}]},{},[15])(15)
+},{"../index.js":1}]},{},[17])(17)
 });
 ;

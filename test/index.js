@@ -144,6 +144,17 @@ test( 'where', function( t ){
 	t.ok( tpl3( array ) === array[1].title, 'renders data within block with one item matching key/value pair' );
 });
 
+test( 'shuffle', function( t ){
+	t.plan(1);
+	var array = ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake'];
+	var tpl = Handlebars.compile('{{#shuffle this}}{{this}},{{/shuffle}}');
+	var result = tpl( array );
+	var result_array = result.substring( 0, result.length - 1 ).split(',');
+	result_array.sort();
+	array.sort();
+	t.ok( result_array.join() == array.join(), 'shuffled collection contains same elements as original collection' );
+});
+
 // Date helpers
 
 test( 'ago', function( t ){

@@ -233,6 +233,24 @@ Where system is "Playstation 2": Metal Gear Solid 2 Metal Gear Solid 3
 Where system is "Playstation 2", limit 1: Metal Gear Solid 2
 ```
 
+### Shuffle
+
+Loop through an array, but in random order.
+
+```javascript
+{
+	array: ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake']
+}
+```
+
+```handlebars
+Shuffled array: {{#shuffle array}}{{this}} {{/shuffle}}
+```
+
+```
+Shuffled array: Vulcan Raven Psycho Mantis Revolver Ocelot Liquid Snake Sniper Wolf Decoy Octopus
+```
+
 ## Date Helpers
 
 ### Ago

@@ -1,6 +1,6 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":13}],2:[function(require,module,exports){
+},{"./lib":15}],2:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -71,7 +71,7 @@ module.exports = function( date_string, format ){
 	var date = new Date( date_string );
 	return strftime( format, date );
 };
-},{"strftime":35}],7:[function(require,module,exports){
+},{"strftime":37}],7:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -113,10 +113,46 @@ module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
 },{}],12:[function(require,module,exports){
+// Simple shuffling method based off of http://bost.ocks.org/mike/shuffle/
+var shuffle = function( array ){
+	var i = array.length, j, swap;
+	while( i ){
+		j = Math.floor( Math.random() * i-- );
+		swap = array[i];
+		array[i] = array[j];
+		array[j] = swap;
+	}
+	return array;
+};
+
+module.exports = function( collection, options ){
+	var shuffled = shuffle( collection );
+	var result = '';
+	for( var i = 0; i < shuffled.length; i++ ){
+		result += options.fn( shuffled[i] );
+	}
+	return result;
+};
+},{}],13:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
+module.exports = function( collection, key, value, limit, options ){
+	options = options || limit;
+	if( typeof limit !== 'number' ) limit = Infinity;
+	var matches = 0;
+	var result = '';
+	for( var i = 0; i < collection.length; i++ ){
+		if( collection[i][key] === value ){
+			result += options.fn( collection[i] );
+			matches++;
+			if( matches === limit ) return result;
+		}
+	}
+	return result;
+};
+},{}],15:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -129,6 +165,8 @@ var helpers = {
 	last: require('./helpers/last.js'),
 	between: require('./helpers/between.js'),
 	range: require('./helpers/range.js'),
+	where: require('./helpers/where.js'),
+	shuffle: require('./helpers/shuffle.js'),
 	// date
 	ago: require('./helpers/ago.js'),
 	formatDate: require('./helpers/formatDate.js')
@@ -139,7 +177,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/first.js":5,"./helpers/formatDate.js":6,"./helpers/last.js":7,"./helpers/length.js":8,"./helpers/lowercase.js":9,"./helpers/range.js":10,"./helpers/replace.js":11,"./helpers/uppercase.js":12}],14:[function(require,module,exports){
+},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/first.js":5,"./helpers/formatDate.js":6,"./helpers/last.js":7,"./helpers/length.js":8,"./helpers/lowercase.js":9,"./helpers/range.js":10,"./helpers/replace.js":11,"./helpers/shuffle.js":12,"./helpers/uppercase.js":13,"./helpers/where.js":14}],16:[function(require,module,exports){
 // UTILITY
 var util = require('util');
 var Buffer = require("buffer").Buffer;
@@ -453,7 +491,7 @@ assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
 
 assert.ifError = function(err) { if (err) {throw err;}};
 
-},{"buffer":21,"util":19}],15:[function(require,module,exports){
+},{"buffer":23,"util":21}],17:[function(require,module,exports){
 var process=require("__browserify_process");if (!process.EventEmitter) process.EventEmitter = function () {};
 
 var EventEmitter = exports.EventEmitter = process.EventEmitter;
@@ -649,10 +687,10 @@ EventEmitter.listenerCount = function(emitter, type) {
   return ret;
 };
 
-},{"__browserify_process":23}],16:[function(require,module,exports){
+},{"__browserify_process":25}],18:[function(require,module,exports){
 // nothing to see here... no file methods for the browser
 
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 var process=require("__browserify_process");function filter (xs, fn) {
     var res = [];
     for (var i = 0; i < xs.length; i++) {
@@ -831,7 +869,7 @@ exports.relative = function(from, to) {
 
 exports.sep = '/';
 
-},{"__browserify_process":23}],18:[function(require,module,exports){
+},{"__browserify_process":25}],20:[function(require,module,exports){
 var events = require('events');
 var util = require('util');
 
@@ -952,7 +990,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":15,"util":19}],19:[function(require,module,exports){
+},{"events":17,"util":21}],21:[function(require,module,exports){
 var events = require('events');
 
 exports.isArray = isArray;
@@ -1299,7 +1337,7 @@ exports.format = function(f) {
   return str;
 };
 
-},{"events":15}],20:[function(require,module,exports){
+},{"events":17}],22:[function(require,module,exports){
 exports.readIEEE754 = function(buffer, offset, isBE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -1385,7 +1423,7 @@ exports.writeIEEE754 = function(buffer, value, offset, isBE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 var assert = require('assert');
 exports.Buffer = Buffer;
 exports.SlowBuffer = Buffer;
@@ -2468,7 +2506,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
   writeDouble(this, value, offset, true, noAssert);
 };
 
-},{"./buffer_ieee754":20,"assert":14,"base64-js":22}],22:[function(require,module,exports){
+},{"./buffer_ieee754":22,"assert":16,"base64-js":24}],24:[function(require,module,exports){
 (function (exports) {
 	'use strict';
 
@@ -2554,7 +2592,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
 	module.exports.fromByteArray = uint8ToBase64;
 }());
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2608,7 +2646,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -2653,7 +2691,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":25,"./handlebars/compiler":29,"./handlebars/runtime":33,"./handlebars/utils":34,"fs":16}],25:[function(require,module,exports){
+},{"./handlebars/base":27,"./handlebars/compiler":31,"./handlebars/runtime":35,"./handlebars/utils":36,"fs":18}],27:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -2821,7 +2859,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],26:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -2961,7 +2999,7 @@ return Handlebars;
 };
 
 
-},{}],27:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -2984,7 +3022,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":30}],28:[function(require,module,exports){
+},{"./parser":32}],30:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -4291,7 +4329,7 @@ return Handlebars;
 
 
 
-},{"./base":27}],29:[function(require,module,exports){
+},{"./base":29}],31:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -4309,7 +4347,7 @@ return Handlebars;
 
 };
 
-},{"./ast":26,"./compiler":28,"./printer":31,"./visitor":32}],30:[function(require,module,exports){
+},{"./ast":28,"./compiler":30,"./printer":33,"./visitor":34}],32:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -4794,7 +4832,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],31:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -4934,7 +4972,7 @@ return Handlebars;
 };
 
 
-},{}],32:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -4954,7 +4992,7 @@ return Handlebars;
 
 
 
-},{}],33:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -5062,7 +5100,7 @@ return Handlebars;
 
 };
 
-},{}],34:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -5147,7 +5185,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],35:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 //
 // strftime
 // github.com/samsonjs/strftime
@@ -5394,7 +5432,7 @@ return Handlebars;
 
 }());
 
-},{}],36:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 var process=require("__browserify_process");var createDefaultStream = require('./lib/default_stream');
 var Test = require('./lib/test');
 var createResultStream = require('./lib/results');
@@ -5522,7 +5560,7 @@ function createHarness (conf_) {
     return test;
 }
 
-},{"./lib/default_stream":37,"./lib/results":38,"./lib/test":39,"__browserify_process":23}],37:[function(require,module,exports){
+},{"./lib/default_stream":39,"./lib/results":40,"./lib/test":41,"__browserify_process":25}],39:[function(require,module,exports){
 var Stream = require('stream');
 
 module.exports = function () {
@@ -5554,7 +5592,7 @@ module.exports = function () {
     return out;
 };
 
-},{"stream":18}],38:[function(require,module,exports){
+},{"stream":20}],40:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream');
 var json = typeof JSON === 'object' ? JSON : require('jsonify');
 var through = require('through');
@@ -5766,7 +5804,7 @@ function getNextTest(results) {
     } while (results.tests.length !== 0)
 }
 
-},{"__browserify_process":23,"jsonify":42,"stream":18,"through":45}],39:[function(require,module,exports){
+},{"__browserify_process":25,"jsonify":44,"stream":20,"through":47}],41:[function(require,module,exports){
 var process=require("__browserify_process"),__dirname="/../node_modules/tape/lib";var Stream = require('stream');
 var deepEqual = require('deep-equal');
 var defined = require('defined');
@@ -6136,7 +6174,7 @@ Test.prototype.doesNotThrow = function (fn, expected, msg, extra) {
 
 // vim: set softtabstop=4 shiftwidth=4:
 
-},{"__browserify_process":23,"deep-equal":40,"defined":41,"events":15,"path":17,"stream":18,"util":19}],40:[function(require,module,exports){
+},{"__browserify_process":25,"deep-equal":42,"defined":43,"events":17,"path":19,"stream":20,"util":21}],42:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var Object_keys = typeof Object.keys === 'function'
     ? Object.keys
@@ -6222,18 +6260,18 @@ function objEquiv(a, b) {
   return true;
 }
 
-},{}],41:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 module.exports = function () {
     for (var i = 0; i < arguments.length; i++) {
         if (arguments[i] !== undefined) return arguments[i];
     }
 };
 
-},{}],42:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 exports.parse = require('./lib/parse');
 exports.stringify = require('./lib/stringify');
 
-},{"./lib/parse":43,"./lib/stringify":44}],43:[function(require,module,exports){
+},{"./lib/parse":45,"./lib/stringify":46}],45:[function(require,module,exports){
 var at, // The index of the current character
     ch, // The current character
     escapee = {
@@ -6508,7 +6546,7 @@ module.exports = function (source, reviver) {
     }({'': result}, '')) : result;
 };
 
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     gap,
@@ -6664,7 +6702,7 @@ module.exports = function (value, replacer, space) {
     return str('', {'': value});
 };
 
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream')
 
 // through
@@ -6774,7 +6812,7 @@ function through (write, end, opts) {
 }
 
 
-},{"__browserify_process":23,"stream":18}],46:[function(require,module,exports){
+},{"__browserify_process":25,"stream":20}],48:[function(require,module,exports){
 var assert = require('assert');
 var test = require('tape');
 var Handlebars = require('handlebars');
@@ -6898,6 +6936,40 @@ test( 'range', function( t ){
 	t.ok( tpl3( array ) == array[3] +' '+ array[4] +' ', 'renders data within block with 2 items starting from index -3' );
 });
 
+test( 'where', function( t ){
+	t.plan(3);
+	var array = [{
+		title: 'Metal Gear Solid',
+		system: 'Playstation',
+		release_year: 1998
+	}, {
+		title: 'Metal Gear Solid 2',
+		system: 'Playstation 2',
+		release_year: 2001
+	}, {
+		title: 'Metal Gear Solid 3',
+		system: 'Playstation 2',
+		release_year: 2004
+	}];
+	var tpl = Handlebars.compile('{{#where this "release_year" 1998}}{{title}}{{/where}}');
+	t.ok( tpl( array ) === array[0].title, 'renders data within block with items matching key/value pair' );
+	var tpl2 = Handlebars.compile('{{#where this "system" "Playstation 2"}}{{title}} {{/where}}');
+	t.ok( tpl2( array ) === array[1].title +' '+ array[2].title +' ', 'renders data within block with items matching key/value pair' );
+	var tpl3 = Handlebars.compile('{{#where this "system" "Playstation 2" 1}}{{title}}{{/where}}');
+	t.ok( tpl3( array ) === array[1].title, 'renders data within block with one item matching key/value pair' );
+});
+
+test( 'shuffle', function( t ){
+	t.plan(1);
+	var array = ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake'];
+	var tpl = Handlebars.compile('{{#shuffle this}}{{this}},{{/shuffle}}');
+	var result = tpl( array );
+	var result_array = result.substring( 0, result.length - 1 ).split(',');
+	result_array.sort();
+	array.sort();
+	t.ok( result_array.join() == array.join(), 'shuffled collection contains same elements as original collection' );
+});
+
 // Date helpers
 
 test( 'ago', function( t ){
@@ -6936,5 +7008,5 @@ test( 'formatDate', function( t ){
 	var tpl4 = Handlebars.compile('{{formatDate this "%v"}}');
 	t.ok( tpl4( dates[3] ) === '30-Sep-2013', 'date successfully formatted' );
 });
-},{"../index.js":1,"assert":14,"handlebars":24,"tape":36}]},{},[46])
+},{"../index.js":1,"assert":16,"handlebars":26,"tape":38}]},{},[48])
 ;
