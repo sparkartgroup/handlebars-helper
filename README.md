@@ -92,8 +92,8 @@ Array contains "Solidus": {{#contains array "Solidus"}}Yup{{else}}Nope{{/contain
 Array2 contains "Solidus": {{#contains array2 "Solidus"}}Yup{{else}}Nope{{/contains}}.
 Object contains "Solidus": {{#contains object "Solidus"}}Yup{{else}}Nope{{/contains}}.
 Object2 contains "Solidus": {{#contains object2 "Solidus"}}Yup{{else}}Nope{{/contains}}.
-String contains "Solid": {{#contains string "Solidus"}}Yup{{else}}Nope{{/contains}}.
-String2 contains "Solid": {{#contains string2 "Solidus"}}Yup{{else}}Nope{{/contains}}.
+String contains "Solidus": {{#contains string "Solidus"}}Yup{{else}}Nope{{/contains}}.
+String2 contains "Solidus": {{#contains string2 "Solidus"}}Yup{{else}}Nope{{/contains}}.
 ```
 
 ```
