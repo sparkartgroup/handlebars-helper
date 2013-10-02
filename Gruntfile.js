@@ -1,6 +1,8 @@
 module.exports = function( grunt ){
 
 	var pkg = grunt.file.readJSON('package.json');
+	var banner = '/* Handlebars Helper v'+ pkg.version +'\n'+
+	'   Generated on <%= grunt.template.today("yyyy-mm-dd \'at\' HH:MM:ss") %> */\n\n';
 
 	grunt.initConfig({
 		browserify: {
@@ -17,6 +19,16 @@ module.exports = function( grunt ){
 					'test/assets/test.js': ['test/index.js']
 				}
 			}
+		},
+		uglify: {
+			build: {
+				options: {
+					banner: banner
+				},
+				files: {
+					'handlebars_helper.js': 'handlebars_helper.js'
+				}
+			}
 		}
 	});
 
@@ -26,7 +38,7 @@ module.exports = function( grunt ){
 	});
 
 	grunt.registerTask( 'default', ['dev'] );
-	grunt.registerTask( 'build', ['browserify'] );
+	grunt.registerTask( 'build', ['browserify','uglify'] );
 	grunt.registerTask( 'dev', ['build'] );
 
 };
