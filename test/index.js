@@ -161,6 +161,13 @@ test( 'shuffle', function( t ){
 	t.ok( result_array.join() == array.join(), 'shuffled collection contains same elements as original collection' );
 });
 
+test( 'reverse', function( t ){
+	t.plan(1);
+	var array = ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake'];
+	var tpl = Handlebars.compile('{{#reverse this}}{{this}} {{/reverse}}');
+	t.ok( tpl( array ) === array.reverse().join(' ') +' ', 'renders data within block with items in reverse order' );
+});
+
 // Date helpers
 
 test( 'ago', function( t ){

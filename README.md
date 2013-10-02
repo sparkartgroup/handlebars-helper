@@ -269,6 +269,25 @@ Shuffled array: {{#shuffle array}}{{this}} {{/shuffle}}
 Shuffled array: Vulcan Raven Psycho Mantis Revolver Ocelot Liquid Snake Sniper Wolf Decoy Octopus
 ```
 
+### Reverse
+
+Loop through an array in reverse order.
+
+```javascript
+{
+	array: ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake']
+}
+```
+
+```handlebars
+Reversed array: {{#reverse array}}{{this}} {{/reverse}}
+```
+
+```
+Reversed array: Liquid Snake Revolver Ocelot Decoy Octopus Vulcan Raven Sniper Wolf Psycho Mantis
+```
+
+
 ## Date Helpers
 
 ### Ago
