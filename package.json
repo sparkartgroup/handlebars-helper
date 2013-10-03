@@ -37,8 +37,8 @@
     "files": "test/index.js",
     "browsers": [
       "ie/6..latest",
-      "ff/15..latest",
-      "chrome/20..latest",
+      "ff/20..latest",
+      "chrome/25..latest",
       "safari/4.0..latest",
       "opera/11.0..latest"
     ]
