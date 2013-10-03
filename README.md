@@ -2,6 +2,8 @@
 
 A collection of Handlebars Helpers for use with Solidus. Not that you can't use it elsewhere, mind you.
 
+[![browser support](https://ci.testling.com/SparkartGroupInc/handlebars-helper.png)](https://ci.testling.com/SparkartGroupInc/handlebars-helper)
+
 ## String Helpers
 
 ### Lowercase
