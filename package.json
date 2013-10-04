@@ -1,6 +1,6 @@
 {
   "name": "handlebars-helper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A collection of helpers for quick and tasty Handlebars templates",
   "main": "index.js",
   "scripts": {
