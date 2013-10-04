@@ -11,7 +11,7 @@ module.exports = function( grunt ){
 					standalone: 'handlebars_helper'
 				},
 				files: {
-					'handlebars_helper.js': ['src/browser.js']
+					'handlebars_helper.js': ['index.js']
 				}
 			},
 			test: {
