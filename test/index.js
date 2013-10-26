@@ -279,3 +279,15 @@ test( 'less', function( t ){
 	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
 	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
 });
+
+// Number helpers
+
+test( 'times', function( t ){
+	t.plan(4);
+	var tpl = Handlebars.compile('{{#times this}}{{this}} {{/times}}');
+	t.ok( tpl(1) === '1 ', 'Renders block 1 times' );
+	t.ok( tpl(5) === '1 2 3 4 5 ', 'Renders block 5 times' );
+	var tpl2 = Handlebars.compile('{{#times this "zero"}}{{this}} {{/times}}');
+	t.ok( tpl2(1) === '0 ', 'Renders block 1 times, zero based' );
+	t.ok( tpl2(5) === '0 1 2 3 4 ', 'Renders block 5 times, zero based' );
+});
