@@ -402,8 +402,39 @@ Render one thing if the first item is greater than the second. Render another th
 `2` is greater than `1`: Yup.
 `1` is greater than `2`: Nope.
 `2` is greater than `2`: Nope.
-`2` is greater than or equal to `1`: Nope.
+`2` is greater than or equal to `1`: Yup.
 `2` is greater than or equal to `2`: Yup.
 `1` is not greater than `2`: Yup.
 `2` is not greater than `2`: Yup.
+```
+
+### Less
+
+Render one thing if the first item is less than the second. Render another thing if it isn't. If you specify "equal", the comparison will be less than **and equal to**.
+
+```javascript
+{ 
+	one: 1,
+	two: 2
+}
+```
+
+```handlebars
+`2` is less than `1`: {{#less two one}}Yup.{{else}}Nope.{{/less}}
+`1` is less than `2`: {{#less one two}}Yup.{{else}}Nope.{{/less}}
+`2` is less than `2`: {{#less two two}}Yup.{{else}}Nope.{{/less}}
+`1` is less than or equal to `2`: {{#less one two "equal"}}Yup.{{else}}Nope.{{/less}}
+`2` is less than or equal to `2`: {{#less two two "equal"}}Yup.{{else}}Nope.{{/less}}
+`2` is not less than `1`: {{^less one two}}Yup.{{else}}Nope.{{/less}}
+`2` is not less than `2`: {{^less two two}}Yup.{{else}}Nope.{{/less}}
+```
+
+```
+`2` is less than `1`: Nope.
+`1` is less than `2`: Yup.
+`2` is less than `2`: Nope.
+`1` is less than or equal to `2`: Yup.
+`2` is less than or equal to `2`: Yup.
+`2` is not less than `1`: Yup.
+`2` is not less than `2`: Yup.
 ```
