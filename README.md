@@ -344,3 +344,117 @@ Sep. 30th 2013
 Monday at 3:00PM
 30-Sep-2013
 ```
+
+## Equality Helpers
+
+### Equal
+
+Render one thing if both variables are equal. Render another thing if they're not. If you specify "exact", the comparison will be done with `===`, which checks for equality AND type.
+
+```javascript
+{ 
+	one: 1,
+	one_string: '1',
+	two: 2
+}
+```
+
+```handlebars
+1 and 1 are equal: {{#equal one one}}Yup.{{else}}Nope.{{/equal}}
+1 and '1' are equal: {{#equal one one_string}}Yup.{{else}}Nope.{{/equal}}
+1 and 2 are equal: {{#equal one two}}Yup.{{else}}Nope.{{/equal}}
+1 and 1 are exactly equal: {{#equal one one "exact"}}Yup.{{else}}Nope.{{/equal}}
+1 and '1' are exactly equal: {{#equal one one_string "exact"}}Yup.{{else}}Nope.{{/equal}}
+1 and 2 are not equal: {{^equal one two}}Yup.{{else}}Nope.{{/equal}}
+```
+
+```
+1 and 1 are equal: Yup.
+1 and '1' are equal: Yup.
+1 and 2 are equal: Nope.
+1 and 1 are exactly equal: Yup.
+1 and '1' are exactly equal: Nope.
+1 and 2 are not equal: Yup.
+```
+
+### Greater
+
+Render one thing if the first item is greater than the second. Render another thing if it isn't. If you specify "equal", the comparison will be greater than **and equal to**.
+
+```javascript
+{ 
+	one: 1,
+	two: 2
+}
+```
+
+```handlebars
+2 is greater than 1: {{#greater two one}}Yup.{{else}}Nope.{{/greater}}
+1 is greater than 2: {{#greater one two}}Yup.{{else}}Nope.{{/greater}}
+2 is greater than 2: {{#greater two two}}Yup.{{else}}Nope.{{/greater}}
+2 is greater than or equal to 1: {{#greater two one "equal"}}Yup.{{else}}Nope.{{/greater}}
+2 is greater than or equal to 2: {{#greater two two "equal"}}Yup.{{else}}Nope.{{/greater}}
+1 is not greater than 2: {{^greater one two}}Yup.{{else}}Nope.{{/greater}}
+2 is not greater than 2: {{^greater two two}}Yup.{{else}}Nope.{{/greater}}
+```
+
+```
+2 is greater than 1: Yup.
+1 is greater than 2: Nope.
+2 is greater than 2: Nope.
+2 is greater than or equal to 1: Yup.
+2 is greater than or equal to 2: Yup.
+1 is not greater than 2: Yup.
+2 is not greater than 2: Yup.
+```
+
+### Less
+
+Render one thing if the first item is less than the second. Render another thing if it isn't. If you specify "equal", the comparison will be less than **and equal to**.
+
+```javascript
+{ 
+	one: 1,
+	two: 2
+}
+```
+
+```handlebars
+2 is less than 1: {{#less two one}}Yup.{{else}}Nope.{{/less}}
+1 is less than 2: {{#less one two}}Yup.{{else}}Nope.{{/less}}
+2 is less than 2: {{#less two two}}Yup.{{else}}Nope.{{/less}}
+1 is less than or equal to 2: {{#less one two "equal"}}Yup.{{else}}Nope.{{/less}}
+2 is less than or equal to 2: {{#less two two "equal"}}Yup.{{else}}Nope.{{/less}}
+2 is not less than 1: {{^less one two}}Yup.{{else}}Nope.{{/less}}
+2 is not less than 2: {{^less two two}}Yup.{{else}}Nope.{{/less}}
+```
+
+```
+2 is less than 1: Nope.
+1 is less than 2: Yup.
+2 is less than 2: Nope.
+1 is less than or equal to 2: Yup.
+2 is less than or equal to 2: Yup.
+2 is not less than 1: Yup.
+2 is not less than 2: Yup.
+```
+
+## Number Helpers
+
+### Times
+
+Render this block **x** times. If "zero" is specified, the count starts at `0` instead of `1`.
+
+```handlebars
+Do this 1 time: {{#times 1}}{{this}} {{/times}}
+Do this 5 times: {{#times 5}}{{this}} {{/times}}
+Do this 1 time, starting from 0: {{#times 1 "zero"}}{{this}} {{/times}}
+Do this 5 times, starting from 0: {{#times 5 "zero"}}{{this}} {{/times}}
+```
+
+```
+Do this 1 time: 1 
+Do this 5 times: 1 2 3 4 5 
+Do this 1 time, starting from 0: 0 
+Do this 5 times, starting from 0: 0 1 2 3 4 
+```

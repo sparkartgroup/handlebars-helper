@@ -206,3 +206,88 @@ test( 'formatDate', function( t ){
 	var tpl4 = Handlebars.compile('{{formatDate this "%v"}}');
 	t.ok( tpl4( dates[3] ) === '30-Sep-2013', 'date successfully formatted' );
 });
+
+// Equality helpers
+
+test( 'equal', function( t ){
+	t.plan(6);
+	var data = [{
+		left: 1,
+		right: 1
+	}, {
+		left: 1,
+		right: '1'
+	}, {
+		left: 1,
+		right: 2
+	}];
+	var tpl = Handlebars.compile('{{#equal left right}}Yup.{{else}}Nope.{{/equal}}');
+	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when items are equal' );
+	t.ok( tpl( data[1] ) === 'Yup.', 'Renders positive block when items are equal, of different types' );
+	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when items are inequal' );
+	var tpl2 = Handlebars.compile('{{#equal left right "exact"}}Yup.{{else}}Nope.{{/equal}}');
+	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when items are equal, exact check' );
+	t.ok( tpl2( data[1] ) === 'Nope.', 'Renders inverse block when items are equal, of different types, exact check' );
+	var tpl3 = Handlebars.compile('{{^equal left right}}Yup.{{else}}Nope.{{/equal}}');
+	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders inverse block when items are inequal, inverse is used' );
+});
+
+test( 'greater', function( t ){
+	t.plan(7);
+	var data = [{
+		left: 2,
+		right: 1
+	}, {
+		left: 1,
+		right: 2
+	}, {
+		left: 2,
+		right: 2
+	}];
+	var tpl = Handlebars.compile('{{#greater left right}}Yup.{{else}}Nope.{{/greater}}');
+	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when left is greater' );
+	t.ok( tpl( data[1] ) === 'Nope.', 'Renders inverse block when left is less' );
+	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
+	var tpl2 = Handlebars.compile('{{#greater left right "equal"}}Yup.{{else}}Nope.{{/greater}}');
+	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when left is greater, or equal check' );
+	t.ok( tpl2( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
+	var tpl3 = Handlebars.compile('{{^greater left right}}Yup.{{else}}Nope.{{/greater}}');
+	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
+	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+});
+
+test( 'less', function( t ){
+	t.plan(7);
+	var data = [{
+		left: 1,
+		right: 2
+	}, {
+		left: 2,
+		right: 1
+	}, {
+		left: 2,
+		right: 2
+	}];
+	var tpl = Handlebars.compile('{{#less left right}}Yup.{{else}}Nope.{{/less}}');
+	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when left is less' );
+	t.ok( tpl( data[1] ) === 'Nope.', 'Renders inverse block when left is less' );
+	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
+	var tpl2 = Handlebars.compile('{{#less left right "equal"}}Yup.{{else}}Nope.{{/less}}');
+	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when left is less, or equal check' );
+	t.ok( tpl2( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
+	var tpl3 = Handlebars.compile('{{^less left right}}Yup.{{else}}Nope.{{/less}}');
+	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
+	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+});
+
+// Number helpers
+
+test( 'times', function( t ){
+	t.plan(4);
+	var tpl = Handlebars.compile('{{#times this}}{{this}} {{/times}}');
+	t.ok( tpl(1) === '1 ', 'Renders block 1 times' );
+	t.ok( tpl(5) === '1 2 3 4 5 ', 'Renders block 5 times' );
+	var tpl2 = Handlebars.compile('{{#times this "zero"}}{{this}} {{/times}}');
+	t.ok( tpl2(1) === '0 ', 'Renders block 1 times, zero based' );
+	t.ok( tpl2(5) === '0 1 2 3 4 ', 'Renders block 5 times, zero based' );
+});
