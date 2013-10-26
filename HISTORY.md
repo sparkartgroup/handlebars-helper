@@ -1,3 +1,9 @@
+### 0.0.3
+*October 26, 2013*
+
+- Added `equal`, `greater`, and `less` helpers
+- Added `times` helper
+
 ### 0.0.2
 *October 4, 2013*
 
