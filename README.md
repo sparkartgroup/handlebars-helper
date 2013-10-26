@@ -376,3 +376,34 @@ Render one thing if both variables are equal. Render another thing if they're no
 `1` and `'1'` are exactly equal: Nope.
 `1` and `2` are not equal: Yup.
 ```
+
+### Greater
+
+Render one thing if the first item is greater than the second. Render another thing if it isn't. If you specify "equal", the comparison will be greater than **and equal to**.
+
+```javascript
+{ 
+	one: 1,
+	two: 2
+}
+```
+
+```handlebars
+`2` is greater than `1`: {{#greater two one}}Yup.{{else}}Nope.{{/greater}}
+`1` is greater than `2`: {{#greater one two}}Yup.{{else}}Nope.{{/greater}}
+`2` is greater than `2`: {{#greater two two}}Yup.{{else}}Nope.{{/greater}}
+`2` is greater than or equal to `1`: {{#greater two one "equal"}}Yup.{{else}}Nope.{{/greater}}
+`2` is greater than or equal to `2`: {{#greater two two "equal"}}Yup.{{else}}Nope.{{/greater}}
+`1` is not greater than `2`: {{^greater one two}}Yup.{{else}}Nope.{{/greater}}
+`2` is not greater than `2`: {{^greater two two}}Yup.{{else}}Nope.{{/greater}}
+```
+
+```
+`2` is greater than `1`: Yup.
+`1` is greater than `2`: Nope.
+`2` is greater than `2`: Nope.
+`2` is greater than or equal to `1`: Nope.
+`2` is greater than or equal to `2`: Yup.
+`1` is not greater than `2`: Yup.
+`2` is not greater than `2`: Yup.
+```
