@@ -438,3 +438,23 @@ Render one thing if the first item is less than the second. Render another thing
 2 is not less than 1: Yup.
 2 is not less than 2: Yup.
 ```
+
+## Number Helpers
+
+### Times
+
+Render this block **x** times. If "zero" is specified, the count starts at `0` instead of `1`.
+
+```handlebars
+Do this 1 time: {{#times 1}}{{this}} {{/times}}
+Do this 5 times: {{#times 5}}{{this}} {{/times}}
+Do this 1 time, starting from 0: {{#times 1 "zero"}}{{this}} {{/times}}
+Do this 5 times, starting from 0: {{#times 5 "zero"}}{{this}} {{/times}}
+```
+
+```
+Do this 1 time: 1 
+Do this 5 times: 1 2 3 4 5 
+Do this 1 time, starting from 0: 0 
+Do this 5 times, starting from 0: 0 1 2 3 4 
+```
