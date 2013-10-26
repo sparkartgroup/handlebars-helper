@@ -231,3 +231,27 @@ test( 'equal', function( t ){
 	var tpl3 = Handlebars.compile('{{^equal left right}}Yup.{{else}}Nope.{{/equal}}');
 	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders inverse block when items are inequal, inverse is used' );
 });
+
+test( 'greater', function( t ){
+	t.plan(7);
+	var data = [{
+		left: 2,
+		right: 1
+	}, {
+		left: 1,
+		right: 2
+	}, {
+		left: 2,
+		right: 2
+	}];
+	var tpl = Handlebars.compile('{{#greater left right}}Yup.{{else}}Nope.{{/greater}}');
+	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when left is greater' );
+	t.ok( tpl( data[1] ) === 'Nope.', 'Renders inverse block when left is less' );
+	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
+	var tpl2 = Handlebars.compile('{{#greater left right "equal"}}Yup.{{else}}Nope.{{/greater}}');
+	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when left is greater, or equal check' );
+	t.ok( tpl2( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
+	var tpl3 = Handlebars.compile('{{^greater left right}}Yup.{{else}}Nope.{{/greater}}');
+	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
+	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+});
