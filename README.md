@@ -360,21 +360,21 @@ Render one thing if both variables are equal. Render another thing if they're no
 ```
 
 ```handlebars
-`1` and `1` are equal: {{#equal one one}}Yup.{{else}}Nope.{{/equal}}
-`1` and `'1'` are equal: {{#equal one one_string}}Yup.{{else}}Nope.{{/equal}}
-`1` and `2` are equal: {{#equal one two}}Yup.{{else}}Nope.{{/equal}}
-`1` and `1` are exactly equal: {{#equal one one "exact"}}Yup.{{else}}Nope.{{/equal}}
-`1` and `'1'` are exactly equal: {{#equal one one_string "exact"}}Yup.{{else}}Nope.{{/equal}}
-`1` and `2` are not equal: {{^equal one two}}Yup.{{else}}Nope.{{/equal}}
+1 and 1 are equal: {{#equal one one}}Yup.{{else}}Nope.{{/equal}}
+1 and '1' are equal: {{#equal one one_string}}Yup.{{else}}Nope.{{/equal}}
+1 and 2 are equal: {{#equal one two}}Yup.{{else}}Nope.{{/equal}}
+1 and 1 are exactly equal: {{#equal one one "exact"}}Yup.{{else}}Nope.{{/equal}}
+1 and '1' are exactly equal: {{#equal one one_string "exact"}}Yup.{{else}}Nope.{{/equal}}
+1 and 2 are not equal: {{^equal one two}}Yup.{{else}}Nope.{{/equal}}
 ```
 
 ```
-`1` and `1` are equal: Yup.
-`1` and `'1'` are equal: Yup.
-`1` and `2` are equal: Nope.
-`1` and `1` are exactly equal: Yup.
-`1` and `'1'` are exactly equal: Nope.
-`1` and `2` are not equal: Yup.
+1 and 1 are equal: Yup.
+1 and '1' are equal: Yup.
+1 and 2 are equal: Nope.
+1 and 1 are exactly equal: Yup.
+1 and '1' are exactly equal: Nope.
+1 and 2 are not equal: Yup.
 ```
 
 ### Greater
@@ -389,23 +389,23 @@ Render one thing if the first item is greater than the second. Render another th
 ```
 
 ```handlebars
-`2` is greater than `1`: {{#greater two one}}Yup.{{else}}Nope.{{/greater}}
-`1` is greater than `2`: {{#greater one two}}Yup.{{else}}Nope.{{/greater}}
-`2` is greater than `2`: {{#greater two two}}Yup.{{else}}Nope.{{/greater}}
-`2` is greater than or equal to `1`: {{#greater two one "equal"}}Yup.{{else}}Nope.{{/greater}}
-`2` is greater than or equal to `2`: {{#greater two two "equal"}}Yup.{{else}}Nope.{{/greater}}
-`1` is not greater than `2`: {{^greater one two}}Yup.{{else}}Nope.{{/greater}}
-`2` is not greater than `2`: {{^greater two two}}Yup.{{else}}Nope.{{/greater}}
+2 is greater than 1: {{#greater two one}}Yup.{{else}}Nope.{{/greater}}
+1 is greater than 2: {{#greater one two}}Yup.{{else}}Nope.{{/greater}}
+2 is greater than 2: {{#greater two two}}Yup.{{else}}Nope.{{/greater}}
+2 is greater than or equal to 1: {{#greater two one "equal"}}Yup.{{else}}Nope.{{/greater}}
+2 is greater than or equal to 2: {{#greater two two "equal"}}Yup.{{else}}Nope.{{/greater}}
+1 is not greater than 2: {{^greater one two}}Yup.{{else}}Nope.{{/greater}}
+2 is not greater than 2: {{^greater two two}}Yup.{{else}}Nope.{{/greater}}
 ```
 
 ```
-`2` is greater than `1`: Yup.
-`1` is greater than `2`: Nope.
-`2` is greater than `2`: Nope.
-`2` is greater than or equal to `1`: Yup.
-`2` is greater than or equal to `2`: Yup.
-`1` is not greater than `2`: Yup.
-`2` is not greater than `2`: Yup.
+2 is greater than 1: Yup.
+1 is greater than 2: Nope.
+2 is greater than 2: Nope.
+2 is greater than or equal to 1: Yup.
+2 is greater than or equal to 2: Yup.
+1 is not greater than 2: Yup.
+2 is not greater than 2: Yup.
 ```
 
 ### Less
@@ -420,21 +420,21 @@ Render one thing if the first item is less than the second. Render another thing
 ```
 
 ```handlebars
-`2` is less than `1`: {{#less two one}}Yup.{{else}}Nope.{{/less}}
-`1` is less than `2`: {{#less one two}}Yup.{{else}}Nope.{{/less}}
-`2` is less than `2`: {{#less two two}}Yup.{{else}}Nope.{{/less}}
-`1` is less than or equal to `2`: {{#less one two "equal"}}Yup.{{else}}Nope.{{/less}}
-`2` is less than or equal to `2`: {{#less two two "equal"}}Yup.{{else}}Nope.{{/less}}
-`2` is not less than `1`: {{^less one two}}Yup.{{else}}Nope.{{/less}}
-`2` is not less than `2`: {{^less two two}}Yup.{{else}}Nope.{{/less}}
+2 is less than 1: {{#less two one}}Yup.{{else}}Nope.{{/less}}
+1 is less than 2: {{#less one two}}Yup.{{else}}Nope.{{/less}}
+2 is less than 2: {{#less two two}}Yup.{{else}}Nope.{{/less}}
+1 is less than or equal to 2: {{#less one two "equal"}}Yup.{{else}}Nope.{{/less}}
+2 is less than or equal to 2: {{#less two two "equal"}}Yup.{{else}}Nope.{{/less}}
+2 is not less than 1: {{^less one two}}Yup.{{else}}Nope.{{/less}}
+2 is not less than 2: {{^less two two}}Yup.{{else}}Nope.{{/less}}
 ```
 
 ```
-`2` is less than `1`: Nope.
-`1` is less than `2`: Yup.
-`2` is less than `2`: Nope.
-`1` is less than or equal to `2`: Yup.
-`2` is less than or equal to `2`: Yup.
-`2` is not less than `1`: Yup.
-`2` is not less than `2`: Yup.
+2 is less than 1: Nope.
+1 is less than 2: Yup.
+2 is less than 2: Nope.
+1 is less than or equal to 2: Yup.
+2 is less than or equal to 2: Yup.
+2 is not less than 1: Yup.
+2 is not less than 2: Yup.
 ```
