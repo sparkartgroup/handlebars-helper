@@ -225,7 +225,7 @@ test( 'equal', function( t ){
 	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when items are equal' );
 	t.ok( tpl( data[1] ) === 'Yup.', 'Renders positive block when items are equal, of different types' );
 	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when items are inequal' );
-	var tpl2 = Handlebars.compile('{{#equal left right true}}Yup.{{else}}Nope.{{/equal}}');
+	var tpl2 = Handlebars.compile('{{#equal left right "exact"}}Yup.{{else}}Nope.{{/equal}}');
 	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when items are equal, exact check' );
 	t.ok( tpl2( data[1] ) === 'Nope.', 'Renders inverse block when items are equal, of different types, exact check' );
 	var tpl3 = Handlebars.compile('{{^equal left right}}Yup.{{else}}Nope.{{/equal}}');
