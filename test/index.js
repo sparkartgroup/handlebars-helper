@@ -206,3 +206,26 @@ test( 'formatDate', function( t ){
 	var tpl4 = Handlebars.compile('{{formatDate this "%v"}}');
 	t.ok( tpl4( dates[3] ) === '30-Sep-2013', 'date successfully formatted' );
 });
+
+// Equality helpers
+
+test( 'equal', function( t ){
+	t.plan(5);
+	var data = [{
+		left: 1,
+		right: 1
+	}, {
+		left: 1,
+		right: '1'
+	}, {
+		left: 1,
+		right: 2
+	}];
+	var tpl = Handlebars.compile('{{#equal left right}}Yup.{{else}}Nope.{{/equal}}');
+	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when items are equal' );
+	t.ok( tpl( data[1] ) === 'Yup.', 'Renders positive block when items are equal, of different types' );
+	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when items are not identical' );
+	var tpl2 = Handlebars.compile('{{#equal left right true}}Yup.{{else}}Nope.{{/equal}}');
+	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when items are equal, exact check' );
+	t.ok( tpl2( data[1] ) === 'Nope.', 'Renders inverse block when items are equal, of different types, exact check' );
+});
