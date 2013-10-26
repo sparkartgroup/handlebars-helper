@@ -344,3 +344,42 @@ Sep. 30th 2013
 Monday at 3:00PM
 30-Sep-2013
 ```
+
+## Equality Helpers
+
+### Equal
+
+Render one thing if both variables are equal. Render another thing if they're not. If you specify "exact", the comparison will be done with `===`, which checks for equality AND type.
+
+```javascript
+{ 
+	numbers: [{
+		left: 1,
+		right: 1
+	}, {
+		left: 1,
+		right: '1'
+	}, {
+		left: 1,
+		right: 2
+	}]
+}
+```
+
+```handlebars
+`1` and `1` are equal: {{#equal numbers[0].left numbers[0].right}}Yup.{{else}}Nope.{{/equal}}
+`1` and `'1'` are equal: {{#equal numbers[1].left numbers[1].right}}Yup.{{else}}Nope.{{/equal}}
+`1` and `2` are equal: {{#equal numbers[2].left numbers[2].right}}Yup.{{else}}Nope.{{/equal}}
+`1` and `1` are exactly equal: {{#equal numbers[0].left numbers[0].right "exact"}}Yup.{{else}}Nope.{{/equal}}
+`1` and `'1'` are exactly equal: {{#equal numbers[1].left numbers[1].right "exact"}}Yup.{{else}}Nope.{{/equal}}
+`1` and `2` are not equal: {{^equal numbers[2].left numbers[2].right}}Yup.{{else}}Nope.{{/equal}}
+```
+
+```
+`1` and `1` are equal: Yup.
+`1` and `'1'` are equal: Yup.
+`1` and `2` are equal: Nope.
+`1` and `1` are exactly equal: Yup.
+`1` and `'1'` are exactly equal: Nope.
+`1` and `2` are not equal: Yup.
+```
