@@ -255,3 +255,27 @@ test( 'greater', function( t ){
 	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
 	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
 });
+
+test( 'less', function( t ){
+	t.plan(7);
+	var data = [{
+		left: 1,
+		right: 2
+	}, {
+		left: 2,
+		right: 1
+	}, {
+		left: 2,
+		right: 2
+	}];
+	var tpl = Handlebars.compile('{{#less left right}}Yup.{{else}}Nope.{{/less}}');
+	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when left is less' );
+	t.ok( tpl( data[1] ) === 'Nope.', 'Renders inverse block when left is less' );
+	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
+	var tpl2 = Handlebars.compile('{{#less left right "equal"}}Yup.{{else}}Nope.{{/less}}');
+	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when left is less, or equal check' );
+	t.ok( tpl2( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
+	var tpl3 = Handlebars.compile('{{^less left right}}Yup.{{else}}Nope.{{/less}}');
+	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
+	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+});
