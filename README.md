@@ -353,26 +353,19 @@ Render one thing if both variables are equal. Render another thing if they're no
 
 ```javascript
 { 
-	numbers: [{
-		left: 1,
-		right: 1
-	}, {
-		left: 1,
-		right: '1'
-	}, {
-		left: 1,
-		right: 2
-	}]
+	one: 1,
+	one_string: '1',
+	two: 2
 }
 ```
 
 ```handlebars
-`1` and `1` are equal: {{#equal numbers[0].left numbers[0].right}}Yup.{{else}}Nope.{{/equal}}
-`1` and `'1'` are equal: {{#equal numbers[1].left numbers[1].right}}Yup.{{else}}Nope.{{/equal}}
-`1` and `2` are equal: {{#equal numbers[2].left numbers[2].right}}Yup.{{else}}Nope.{{/equal}}
-`1` and `1` are exactly equal: {{#equal numbers[0].left numbers[0].right "exact"}}Yup.{{else}}Nope.{{/equal}}
-`1` and `'1'` are exactly equal: {{#equal numbers[1].left numbers[1].right "exact"}}Yup.{{else}}Nope.{{/equal}}
-`1` and `2` are not equal: {{^equal numbers[2].left numbers[2].right}}Yup.{{else}}Nope.{{/equal}}
+`1` and `1` are equal: {{#equal one one}}Yup.{{else}}Nope.{{/equal}}
+`1` and `'1'` are equal: {{#equal one one_string}}Yup.{{else}}Nope.{{/equal}}
+`1` and `2` are equal: {{#equal one two}}Yup.{{else}}Nope.{{/equal}}
+`1` and `1` are exactly equal: {{#equal one one "exact"}}Yup.{{else}}Nope.{{/equal}}
+`1` and `'1'` are exactly equal: {{#equal one one_string "exact"}}Yup.{{else}}Nope.{{/equal}}
+`1` and `2` are not equal: {{^equal one two}}Yup.{{else}}Nope.{{/equal}}
 ```
 
 ```
