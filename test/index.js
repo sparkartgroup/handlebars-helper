@@ -190,7 +190,7 @@ test( 'ago', function( t ){
 });
 
 test( 'formatDate', function( t ){
-	t.plan(4);
+	t.plan(5);
 	var dates = [
 		'2013-09-30T15:00:00.340Z',
 		'2013/09/30 15:00:00 +0000',
@@ -201,10 +201,12 @@ test( 'formatDate', function( t ){
 	t.ok( tpl( dates[0] ) === 'Monday, September 30th 2013', 'date successfully formatted' );
 	var tpl2 = Handlebars.compile('{{formatDate this "%b. %o %Y"}}');
 	t.ok( tpl2( dates[1] ) === 'Sep. 30th 2013', 'date successfully formatted' );
-	var tpl3 = Handlebars.compile('{{formatDate this "%A at %-l:%M%p"}}');
-	t.ok( tpl3( dates[2] ) === 'Monday at 3:00PM', 'date successfully formatted' );
-	var tpl4 = Handlebars.compile('{{formatDate this "%v"}}');
-	t.ok( tpl4( dates[3] ) === '30-Sep-2013', 'date successfully formatted' );
+	var tpl3 = Handlebars.compile('{{formatDate this "%A at %-l:%M%p" 0 }}');
+	t.ok( tpl3( dates[2] ) === 'Monday at 10:00PM', 'date successfully formatted' );
+	var tpl4 = Handlebars.compile('{{formatDate this "%A at %-l:%M%p" -120 }}');
+	t.ok( tpl4( dates[2] ) === 'Monday at 8:00PM', 'date successfully formatted' );
+	var tpl5 = Handlebars.compile('{{formatDate this "%v"}}');
+	t.ok( tpl5( dates[3] ) === '30-Sep-2013', 'date successfully formatted' );
 });
 
 // Equality helpers
