@@ -320,6 +320,8 @@ Ago for way earlier: 30 days ago
 
 Render a date or date-like value however you wanna. Uses [samsonjs/strftime](https://github.com/samsonjs/strftime) under the hood, so check out its documentation for [the list of format options](https://github.com/samsonjs/strftime#supported-specifiers).
 
+I should also add that this is using `strftimeTZ`, which allows us to **specify an offset from GMT in minutes**. This is especially useful when using Handlebars Helper server side, as the server will likely use an arbitrary time zone by default. 
+
 ```javascript
 {
 	dates: [
@@ -334,14 +336,16 @@ Render a date or date-like value however you wanna. Uses [samsonjs/strftime](htt
 ```handlebars
 {{formatDate dates[0] "%A, %B %o %Y"}}
 {{formatDate dates[1] "%b. %o %Y"}}
-{{formatDate dates[2] "%A at %-l:%M%p"}}
+{{formatDate dates[2] "%A at %-l:%M%p" 0 }}
+{{formatDate dates[2] "%A at %-l:%M%p" -120 }}
 {{formatDate dates[3] "%v"}}
 ```
 
 ```
 Monday, September 30th 2013
 Sep. 30th 2013
-Monday at 3:00PM
+Monday at 10:00PM
+Monday at 8:00PM
 30-Sep-2013
 ```
 
