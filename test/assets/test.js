@@ -1,6 +1,6 @@
 ;(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 module.exports = require('./lib');
-},{"./lib":21}],2:[function(require,module,exports){
+},{"./lib":22}],2:[function(require,module,exports){
 // Modified form of `timeago` helper from https://github.com/assemble/handlebars-helpers
 var YEAR = 60 * 60 * 24 * 365;
 var MONTH = 60 * 60 * 24 * 30;
@@ -84,7 +84,7 @@ module.exports = function( date_string, format, offset ){
 	var date = new Date( date_string );
 	return strftimeTZ( format, date, offset );
 };
-},{"strftime":51}],9:[function(require,module,exports){
+},{"strftime":52}],9:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -93,6 +93,20 @@ module.exports = function( left, right, equal, options ){
 	return options.inverse();
 };
 },{}],10:[function(require,module,exports){
+module.exports = function( collection, separator ){
+	separator = ( typeof separator === 'string' ) ? separator : '';
+	// if the collectoin is an array this is easy
+	if( collection.join ) return collection.join( separator );
+	// if it's not we actually have to write code.
+	var result = '';
+	for( var property in collection ){
+		if( collection.hasOwnProperty(property) ){
+			result += collection[property] + separator;
+		}
+	}
+	return result.slice( 0, -separator.length );
+};
+},{}],11:[function(require,module,exports){
 module.exports = function( collection, count, options ){
 	options = options || count;
 	count = ( typeof count === 'number' ) ? count : 1;
@@ -102,7 +116,7 @@ module.exports = function( collection, count, options ){
 		if( i + 1 == count ) return result;
 	}
 };
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 module.exports = function( collection ){
 	if( collection.length ) return collection.length;
 	var length = 0;
@@ -113,7 +127,7 @@ module.exports = function( collection ){
 	}
 	return length;
 };
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = function( left, right, equal, options ){
 	options = options || equal;
 	equal = ( equal === 'equal' ) ? true : false;
@@ -121,11 +135,11 @@ module.exports = function( left, right, equal, options ){
 	if( is_greater ) return options.fn();
 	return options.inverse();
 };
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toLowerCase();	
 };
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 module.exports = function( collection, start, amount, options ){
 	options = options || amount;
 	if( typeof start !== 'number' ) return;
@@ -137,11 +151,11 @@ module.exports = function( collection, start, amount, options ){
 	}
 	return result;
 };
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 module.exports = function( string, to_replace, replacement ){
 	return ( string || '' ).replace( to_replace, replacement );
 };
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 module.exports = function( collection, options ){
 	var result = '';
 	for( var i = collection.length - 1; i >= 0; i-- ){
@@ -149,7 +163,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 // Simple shuffling method based off of http://bost.ocks.org/mike/shuffle/
 var shuffle = function( array ){
 	var i = array.length, j, swap;
@@ -170,7 +184,7 @@ module.exports = function( collection, options ){
 	}
 	return result;
 };
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 module.exports = function( number, zero, options ){
 	options = options || zero;
 	zero = ( zero === 'zero' ) ? true : false;
@@ -184,11 +198,11 @@ module.exports = function( number, zero, options ){
 	}
 	return result;
 };
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 module.exports = function( string ){
 	return ( string || '' ).toUpperCase();
 };
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 module.exports = function( collection, key, value, limit, options ){
 	options = options || limit;
 	if( typeof limit !== 'number' ) limit = Infinity;
@@ -203,7 +217,7 @@ module.exports = function( collection, key, value, limit, options ){
 	}
 	return result;
 };
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 var helpers = {
 	// string
 	lowercase: require('./helpers/lowercase.js'),
@@ -220,6 +234,7 @@ var helpers = {
 	where: require('./helpers/where.js'),
 	shuffle: require('./helpers/shuffle.js'),
 	reverse: require('./helpers/reverse.js'),
+	join: require('./helpers/join.js'),
 	// date
 	ago: require('./helpers/ago.js'),
 	formatDate: require('./helpers/formatDate.js'),
@@ -236,7 +251,7 @@ module.exports.help = function( Handlebars ){
 		Handlebars.registerHelper( name, helpers[name] );
 	}
 };
-},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/encode.js":5,"./helpers/equal.js":6,"./helpers/first.js":7,"./helpers/formatDate.js":8,"./helpers/greater.js":9,"./helpers/last.js":10,"./helpers/length.js":11,"./helpers/less.js":12,"./helpers/lowercase.js":13,"./helpers/range.js":14,"./helpers/replace.js":15,"./helpers/reverse.js":16,"./helpers/shuffle.js":17,"./helpers/times.js":18,"./helpers/uppercase.js":19,"./helpers/where.js":20}],22:[function(require,module,exports){
+},{"./helpers/ago.js":2,"./helpers/between.js":3,"./helpers/contains.js":4,"./helpers/encode.js":5,"./helpers/equal.js":6,"./helpers/first.js":7,"./helpers/formatDate.js":8,"./helpers/greater.js":9,"./helpers/join.js":10,"./helpers/last.js":11,"./helpers/length.js":12,"./helpers/less.js":13,"./helpers/lowercase.js":14,"./helpers/range.js":15,"./helpers/replace.js":16,"./helpers/reverse.js":17,"./helpers/shuffle.js":18,"./helpers/times.js":19,"./helpers/uppercase.js":20,"./helpers/where.js":21}],23:[function(require,module,exports){
 
 
 //
@@ -454,7 +469,7 @@ if (typeof Object.getOwnPropertyDescriptor === 'function') {
   exports.getOwnPropertyDescriptor = valueObject;
 }
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -527,7 +542,7 @@ function onend() {
   timers.setImmediate(shims.bind(this.end, this));
 }
 
-},{"_shims":22,"_stream_readable":25,"_stream_writable":27,"timers":34,"util":35}],24:[function(require,module,exports){
+},{"_shims":23,"_stream_readable":26,"_stream_writable":28,"timers":35,"util":36}],25:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -570,7 +585,7 @@ PassThrough.prototype._transform = function(chunk, encoding, cb) {
   cb(null, chunk);
 };
 
-},{"_stream_transform":26,"util":35}],25:[function(require,module,exports){
+},{"_stream_transform":27,"util":36}],26:[function(require,module,exports){
 var process=require("__browserify_process");// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1491,7 +1506,7 @@ function endReadable(stream) {
   }
 }
 
-},{"__browserify_process":39,"_shims":22,"buffer":37,"events":29,"stream":32,"string_decoder":33,"timers":34,"util":35}],26:[function(require,module,exports){
+},{"__browserify_process":40,"_shims":23,"buffer":38,"events":30,"stream":33,"string_decoder":34,"timers":35,"util":36}],27:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -1697,7 +1712,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"_stream_duplex":23,"util":35}],27:[function(require,module,exports){
+},{"_stream_duplex":24,"util":36}],28:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2067,7 +2082,7 @@ function endWritable(stream, state, cb) {
   state.ended = true;
 }
 
-},{"buffer":37,"stream":32,"timers":34,"util":35}],28:[function(require,module,exports){
+},{"buffer":38,"stream":33,"timers":35,"util":36}],29:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2384,7 +2399,7 @@ assert.doesNotThrow = function(block, /*optional*/message) {
 };
 
 assert.ifError = function(err) { if (err) {throw err;}};
-},{"_shims":22,"util":35}],29:[function(require,module,exports){
+},{"_shims":23,"util":36}],30:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2665,13 +2680,13 @@ EventEmitter.listenerCount = function(emitter, type) {
     ret = emitter._events[type].length;
   return ret;
 };
-},{"util":35}],30:[function(require,module,exports){
+},{"util":36}],31:[function(require,module,exports){
 
 // not implemented
 // The reason for having an empty file and not throwing is to allow
 // untraditional implementation of this module.
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 var process=require("__browserify_process");// Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2882,7 +2897,7 @@ exports.extname = function(path) {
   return splitPath(path)[3];
 };
 
-},{"__browserify_process":39,"_shims":22,"util":35}],32:[function(require,module,exports){
+},{"__browserify_process":40,"_shims":23,"util":36}],33:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3011,7 +3026,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"_stream_duplex":23,"_stream_passthrough":24,"_stream_readable":25,"_stream_transform":26,"_stream_writable":27,"events":29,"util":35}],33:[function(require,module,exports){
+},{"_stream_duplex":24,"_stream_passthrough":25,"_stream_readable":26,"_stream_transform":27,"_stream_writable":28,"events":30,"util":36}],34:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3204,7 +3219,7 @@ function base64DetectIncompleteChar(buffer) {
   return incomplete;
 }
 
-},{"buffer":37}],34:[function(require,module,exports){
+},{"buffer":38}],35:[function(require,module,exports){
 try {
     // Old IE browsers that do not curry arguments
     if (!setTimeout.call) {
@@ -3323,7 +3338,7 @@ if (!exports.setImmediate) {
   };
 }
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3868,7 +3883,7 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-},{"_shims":22}],36:[function(require,module,exports){
+},{"_shims":23}],37:[function(require,module,exports){
 exports.readIEEE754 = function(buffer, offset, isBE, mLen, nBytes) {
   var e, m,
       eLen = nBytes * 8 - mLen - 1,
@@ -3954,7 +3969,7 @@ exports.writeIEEE754 = function(buffer, value, offset, isBE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128;
 };
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 var assert;
 exports.Buffer = Buffer;
 exports.SlowBuffer = Buffer;
@@ -5080,7 +5095,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
   writeDouble(this, value, offset, true, noAssert);
 };
 
-},{"./buffer_ieee754":36,"assert":28,"base64-js":38}],38:[function(require,module,exports){
+},{"./buffer_ieee754":37,"assert":29,"base64-js":39}],39:[function(require,module,exports){
 (function (exports) {
 	'use strict';
 
@@ -5166,7 +5181,7 @@ Buffer.prototype.writeDoubleBE = function(value, offset, noAssert) {
 	module.exports.fromByteArray = uint8ToBase64;
 }());
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -5220,7 +5235,7 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 var handlebars = require("./handlebars/base"),
 
 // Each of these augment the Handlebars object. No need to setup here.
@@ -5265,7 +5280,7 @@ if (require.extensions) {
 // var singleton = handlebars.Handlebars,
 //  local = handlebars.create();
 
-},{"./handlebars/base":41,"./handlebars/compiler":45,"./handlebars/runtime":49,"./handlebars/utils":50,"fs":30}],41:[function(require,module,exports){
+},{"./handlebars/base":42,"./handlebars/compiler":46,"./handlebars/runtime":50,"./handlebars/utils":51,"fs":31}],42:[function(require,module,exports){
 /*jshint eqnull: true */
 
 module.exports.create = function() {
@@ -5433,7 +5448,7 @@ Handlebars.registerHelper('log', function(context, options) {
 return Handlebars;
 };
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -5573,7 +5588,7 @@ return Handlebars;
 };
 
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 var handlebars = require("./parser");
 
 exports.attach = function(Handlebars) {
@@ -5596,7 +5611,7 @@ Handlebars.parse = function(input) {
 return Handlebars;
 };
 
-},{"./parser":46}],44:[function(require,module,exports){
+},{"./parser":47}],45:[function(require,module,exports){
 var compilerbase = require("./base");
 
 exports.attach = function(Handlebars) {
@@ -6903,7 +6918,7 @@ return Handlebars;
 
 
 
-},{"./base":43}],45:[function(require,module,exports){
+},{"./base":44}],46:[function(require,module,exports){
 // Each of these module will augment the Handlebars object as it loads. No need to perform addition operations
 module.exports.attach = function(Handlebars) {
 
@@ -6921,7 +6936,7 @@ return Handlebars;
 
 };
 
-},{"./ast":42,"./compiler":44,"./printer":47,"./visitor":48}],46:[function(require,module,exports){
+},{"./ast":43,"./compiler":45,"./printer":48,"./visitor":49}],47:[function(require,module,exports){
 // BEGIN(BROWSER)
 /* Jison generated parser */
 var handlebars = (function(){
@@ -7406,7 +7421,7 @@ return new Parser;
 
 module.exports = handlebars;
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -7546,7 +7561,7 @@ return Handlebars;
 };
 
 
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -7566,7 +7581,7 @@ return Handlebars;
 
 
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 // BEGIN(BROWSER)
@@ -7674,7 +7689,7 @@ return Handlebars;
 
 };
 
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 exports.attach = function(Handlebars) {
 
 var toString = Object.prototype.toString;
@@ -7759,7 +7774,7 @@ Handlebars.Utils = {
 return Handlebars;
 };
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 //
 // strftime
 // github.com/samsonjs/strftime
@@ -8033,7 +8048,7 @@ return Handlebars;
 
 }());
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 var process=require("__browserify_process");var createDefaultStream = require('./lib/default_stream');
 var Test = require('./lib/test');
 var createResultStream = require('./lib/results');
@@ -8161,7 +8176,7 @@ function createHarness (conf_) {
     return test;
 }
 
-},{"./lib/default_stream":53,"./lib/results":54,"./lib/test":55,"__browserify_process":39}],53:[function(require,module,exports){
+},{"./lib/default_stream":54,"./lib/results":55,"./lib/test":56,"__browserify_process":40}],54:[function(require,module,exports){
 var Stream = require('stream');
 
 module.exports = function () {
@@ -8193,7 +8208,7 @@ module.exports = function () {
     return out;
 };
 
-},{"stream":32}],54:[function(require,module,exports){
+},{"stream":33}],55:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream');
 var json = typeof JSON === 'object' ? JSON : require('jsonify');
 var through = require('through');
@@ -8405,7 +8420,7 @@ function getNextTest(results) {
     } while (results.tests.length !== 0)
 }
 
-},{"__browserify_process":39,"jsonify":58,"stream":32,"through":61}],55:[function(require,module,exports){
+},{"__browserify_process":40,"jsonify":59,"stream":33,"through":62}],56:[function(require,module,exports){
 var process=require("__browserify_process"),__dirname="/..\\node_modules\\tape\\lib";var Stream = require('stream');
 var deepEqual = require('deep-equal');
 var defined = require('defined');
@@ -8775,7 +8790,7 @@ Test.prototype.doesNotThrow = function (fn, expected, msg, extra) {
 
 // vim: set softtabstop=4 shiftwidth=4:
 
-},{"__browserify_process":39,"deep-equal":56,"defined":57,"events":29,"path":31,"stream":32,"util":35}],56:[function(require,module,exports){
+},{"__browserify_process":40,"deep-equal":57,"defined":58,"events":30,"path":32,"stream":33,"util":36}],57:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var Object_keys = typeof Object.keys === 'function'
     ? Object.keys
@@ -8861,18 +8876,18 @@ function objEquiv(a, b) {
   return true;
 }
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 module.exports = function () {
     for (var i = 0; i < arguments.length; i++) {
         if (arguments[i] !== undefined) return arguments[i];
     }
 };
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 exports.parse = require('./lib/parse');
 exports.stringify = require('./lib/stringify');
 
-},{"./lib/parse":59,"./lib/stringify":60}],59:[function(require,module,exports){
+},{"./lib/parse":60,"./lib/stringify":61}],60:[function(require,module,exports){
 var at, // The index of the current character
     ch, // The current character
     escapee = {
@@ -9147,7 +9162,7 @@ module.exports = function (source, reviver) {
     }({'': result}, '')) : result;
 };
 
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     gap,
@@ -9303,7 +9318,7 @@ module.exports = function (value, replacer, space) {
     return str('', {'': value});
 };
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 var process=require("__browserify_process");var Stream = require('stream')
 
 // through
@@ -9413,7 +9428,7 @@ function through (write, end, opts) {
 }
 
 
-},{"__browserify_process":39,"stream":32}],62:[function(require,module,exports){
+},{"__browserify_process":40,"stream":33}],63:[function(require,module,exports){
 var assert = require('assert');
 var test = require('tape');
 var Handlebars = require('handlebars');
@@ -9709,5 +9724,5 @@ test( 'times', function( t ){
 	t.ok( tpl2(1) === '0 ', 'Renders block 1 times, zero based' );
 	t.ok( tpl2(5) === '0 1 2 3 4 ', 'Renders block 5 times, zero based' );
 });
-},{"../index.js":1,"assert":28,"handlebars":40,"tape":52}]},{},[62])
+},{"../index.js":1,"assert":29,"handlebars":41,"tape":53}]},{},[63])
 ;
