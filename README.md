@@ -289,6 +289,27 @@ Reversed array: {{#reverse array}}{{this}} {{/reverse}}
 Reversed array: Liquid Snake Revolver Ocelot Decoy Octopus Vulcan Raven Sniper Wolf Psycho Mantis
 ```
 
+### Join
+
+Join a collection together with the specified separator. If run on an object, it just joins the values together (ignoring keys).
+
+```javascript
+{
+	array: ['Psycho Mantis', 'Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake'],
+	object: { '1': 'Psycho Mantis', '2': 'Sniper Wolf', '3': 'Vulcan Raven', '4': 'Decoy Octopus', '5': 'Revolver Ocelot', '6': 'Liquid Snake' }
+}
+```
+
+```handlebars
+Joined array: {{join array ", "}}
+Joined object: {{join object ", "}}
+```
+
+```
+Joined array: Psycho Mantis, Sniper Wolf, Vulcan Raven, Decoy Octopus, Revolver Ocelot, Liquid Snake
+Joined object: Psycho Mantis, Sniper Wolf, Vulcan Raven, Decoy Octopus, Revolver Ocelot, Liquid Snake
+```
+
 
 ## Date Helpers
 
