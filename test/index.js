@@ -168,6 +168,15 @@ test( 'reverse', function( t ){
 	t.ok( tpl( array ) === array.reverse().join(' ') +' ', 'renders data within block with items in reverse order' );
 });
 
+test( 'join', function( t ){
+	t.plan(2);
+	var array = ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake'];
+	var object = { '1': 'Psycho Mantis', '2': 'Sniper Wolf', '3': 'Vulcan Raven', '4': 'Decoy Octopus', '5': 'Revolver Ocelot', '6': 'Liquid Snake' };
+	var tpl = Handlebars.compile('{{join this ", "}}');
+	t.ok( tpl( array ) === array.join(', '), 'renders joined data from array' );
+	t.ok( tpl( object ) === array.join(', '), 'renders joined data from object' );
+});
+
 // Date helpers
 
 test( 'ago', function( t ){
