@@ -1,3 +1,8 @@
+### 0.0.4
+*November 8, 2013*
+
+- Added `offset` option to `formatDate` helper
+
 ### 0.0.3
 *October 26, 2013*
 
