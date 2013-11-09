@@ -1,3 +1,8 @@
+### 0.0.5
+*November 8, 2013*
+
+- Added `join` helper
+
 ### 0.0.4
 *November 8, 2013*
 
