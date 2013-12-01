@@ -129,20 +129,31 @@ String2 contains "Solidus": Nope.
 
 Render something with the first item in an array. Or render something with the first `count` items in an array, I won't judge.
 
+This can also display the "first" `count` items in an object. Use with caution, as browsers don't always agree on what the "first" item in an object is.
+
 ```javascript
 {
-	array: ['Solid', 'Liquid', 'Solidus']
+	array: ['Solid', 'Liquid', 'Solidus'],
+	object: {
+		one: 'Solid',
+		two: 'Liquid',
+		three: 'Solidus'
+	}
 }
 ```
 
 ```handlebars
 First item in array: {{#first array}}{{this}} {{/first}}
 First two items in array: {{#first array 2}}{{this}} {{/first}}
+First item in object: {{#first object}}{{this}} {{/first}}
+First two items in object: {{#first object 2}}{{this}} {{/first}}
 ```
 
 ```
 First item in array: Solid
 First two items in array: Solid Liquid
+First item in object: Solid
+First two items in object: Solid Liquid
 ```
 
 ### Last
