@@ -1,3 +1,8 @@
+### 0.0.6
+*November 30, 2013*
+
+- `first` helper now works with objects
+
 ### 0.0.5
 *November 8, 2013*
 
