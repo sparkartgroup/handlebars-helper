@@ -31,7 +31,8 @@
     "tape": "~1.1.1"
   },
   "dependencies": {
-    "strftime": "~0.7.0"
+    "strftime": "~0.7.0",
+    "new-date": "~0.2.0"
   },
   "testling": {
     "files": "test/index.js",
