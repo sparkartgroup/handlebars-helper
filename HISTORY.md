@@ -1,3 +1,8 @@
+### 0.0.7
+*December 18, 2013*
+
+- `ago` and `formatDate` helpers now work with unix timestamps as strings
+
 ### 0.0.6
 *November 30, 2013*
 
