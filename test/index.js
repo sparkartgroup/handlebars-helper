@@ -187,7 +187,7 @@ test( 'join', function( t ){
 // Date helpers
 
 test( 'ago', function( t ){
-	t.plan(7);
+	t.plan(8);
 	var now = new Date;
 	var seconds_ago = new Date( now - SECOND * 30 );
 	var minutes_ago = new Date( now - MINUTE * 30 );
@@ -202,7 +202,8 @@ test( 'ago', function( t ){
 	t.ok( tpl( hours_ago ) === '12 hours ago', 'renders "12 hours ago" for a date 12 hours in the past' );
 	t.ok( tpl( days_ago ) === '10 days ago', 'renders "10 days ago" for a date 10 days in the past' );
 	t.ok( tpl( months_ago ) === '6 months ago', 'renders "6 months ago" for a date 6 months in the past' );
-	t.ok( tpl( year_ago ) === '2 years ago', 'renders "2 years ago" for a date 1 year in the past' );
+	t.ok( tpl( year_ago ) === '2 years ago', 'renders "2 years ago" for a date 2 years in the past' );
+	t.ok( tpl( year_ago.getTime().toString() ) === '2 years ago', 'renders "2 years ago" for a date 2 years in the past (string)' );
 });
 
 test( 'formatDate', function( t ){
