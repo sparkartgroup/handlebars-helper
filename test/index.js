@@ -291,27 +291,32 @@ test( 'greater', function( t ){
 });
 
 test( 'less', function( t ){
-	t.plan(7);
-	var data = [{
-		left: 1,
-		right: 2
-	}, {
-		left: 2,
-		right: 1
-	}, {
-		left: 2,
-		right: 2
-	}];
+	t.plan(8);
+	var data = {
+		pairs: [{
+			left: 1,
+			right: 2
+		}, {
+			left: 2,
+			right: 1
+		}, {
+			left: 2,
+			right: 2
+		}],
+		context: 'confirmed'
+	};
 	var tpl = Handlebars.compile('{{#less left right}}Yup.{{else}}Nope.{{/less}}');
-	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when left is less' );
-	t.ok( tpl( data[1] ) === 'Nope.', 'Renders inverse block when left is less' );
-	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
+	t.ok( tpl( data.pairs[0] ) === 'Yup.', 'Renders positive block when left is less' );
+	t.ok( tpl( data.pairs[1] ) === 'Nope.', 'Renders inverse block when left is less' );
+	t.ok( tpl( data.pairs[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
 	var tpl2 = Handlebars.compile('{{#less left right "equal"}}Yup.{{else}}Nope.{{/less}}');
-	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when left is less, or equal check' );
-	t.ok( tpl2( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
+	t.ok( tpl2( data.pairs[0] ) === 'Yup.', 'Renders positive block when left is less, or equal check' );
+	t.ok( tpl2( data.pairs[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
 	var tpl3 = Handlebars.compile('{{^less left right}}Yup.{{else}}Nope.{{/less}}');
-	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
-	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+	t.ok( tpl3( data.pairs[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
+	t.ok( tpl3( data.pairs[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+	var tpl_context = Handlebars.compile('{{#less 1 2}}{{context}}{{/less}}');
+	t.ok( tpl_context( data ) === 'confirmed', 'executes block in parent context' );
 });
 
 // Number helpers
