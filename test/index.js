@@ -61,7 +61,7 @@ test( 'length', function( t ){
 });
 
 test( 'contains', function( t ){
-	t.plan(6);
+	t.plan(7);
 	var data = {
 		array: ['Solid', 'Liquid', 'Solidus'],
 		array2: ['Chell', 'GLaDOS', 'Wheatley'],
@@ -76,7 +76,8 @@ test( 'contains', function( t ){
 			three: 'Wheatley'
 		},
 		string: 'Solidus Snake',
-		string2: 'Solid Snake'
+		string2: 'Solid Snake',
+		context: 'confirmed'
 	};
 	var tpl = Handlebars.compile('{{#contains this "Solidus"}}Yup{{else}}Nope{{/contains}}.');
 	t.ok( tpl( data.array ) === 'Yup.', 'renders data within block when item is in array' );
@@ -85,6 +86,8 @@ test( 'contains', function( t ){
 	t.ok( tpl( data.object2 ) === 'Nope.', 'renders else block when item is not in object' );
 	t.ok( tpl( data.string ) === 'Yup.', 'renders data within block when substring is in string' );
 	t.ok( tpl( data.string2 ) === 'Nope.', 'renders else block when substring is not in string' );
+	var tpl_context = Handlebars.compile('{{#contains this.array "Solidus"}}{{context}}{{/contains}}');
+	t.ok( tpl_context( data ) === 'confirmed', 'executes block in parent context' );
 });
 
 test( 'first', function( t ){
