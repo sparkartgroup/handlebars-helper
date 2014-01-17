@@ -61,7 +61,7 @@ test( 'length', function( t ){
 });
 
 test( 'contains', function( t ){
-	t.plan(6);
+	t.plan(7);
 	var data = {
 		array: ['Solid', 'Liquid', 'Solidus'],
 		array2: ['Chell', 'GLaDOS', 'Wheatley'],
@@ -76,7 +76,8 @@ test( 'contains', function( t ){
 			three: 'Wheatley'
 		},
 		string: 'Solidus Snake',
-		string2: 'Solid Snake'
+		string2: 'Solid Snake',
+		context: 'confirmed'
 	};
 	var tpl = Handlebars.compile('{{#contains this "Solidus"}}Yup{{else}}Nope{{/contains}}.');
 	t.ok( tpl( data.array ) === 'Yup.', 'renders data within block when item is in array' );
@@ -85,6 +86,8 @@ test( 'contains', function( t ){
 	t.ok( tpl( data.object2 ) === 'Nope.', 'renders else block when item is not in object' );
 	t.ok( tpl( data.string ) === 'Yup.', 'renders data within block when substring is in string' );
 	t.ok( tpl( data.string2 ) === 'Nope.', 'renders else block when substring is not in string' );
+	var tpl_context = Handlebars.compile('{{#contains this.array "Solidus"}}{{context}}{{/contains}}');
+	t.ok( tpl_context( data ) === 'confirmed', 'executes block in parent context' );
 });
 
 test( 'first', function( t ){
@@ -231,74 +234,89 @@ test( 'formatDate', function( t ){
 // Equality helpers
 
 test( 'equal', function( t ){
-	t.plan(6);
-	var data = [{
-		left: 1,
-		right: 1
-	}, {
-		left: 1,
-		right: '1'
-	}, {
-		left: 1,
-		right: 2
-	}];
+	t.plan(7);
+	var data = {
+		pairs: [{
+			left: 1,
+			right: 1
+		}, {
+			left: 1,
+			right: '1'
+		}, {
+			left: 1,
+			right: 2
+		}],
+		context: 'confirmed'
+	};
 	var tpl = Handlebars.compile('{{#equal left right}}Yup.{{else}}Nope.{{/equal}}');
-	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when items are equal' );
-	t.ok( tpl( data[1] ) === 'Yup.', 'Renders positive block when items are equal, of different types' );
-	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when items are inequal' );
+	t.ok( tpl( data.pairs[0] ) === 'Yup.', 'Renders positive block when items are equal' );
+	t.ok( tpl( data.pairs[1] ) === 'Yup.', 'Renders positive block when items are equal, of different types' );
+	t.ok( tpl( data.pairs[2] ) === 'Nope.', 'Renders inverse block when items are inequal' );
 	var tpl2 = Handlebars.compile('{{#equal left right "exact"}}Yup.{{else}}Nope.{{/equal}}');
-	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when items are equal, exact check' );
-	t.ok( tpl2( data[1] ) === 'Nope.', 'Renders inverse block when items are equal, of different types, exact check' );
+	t.ok( tpl2( data.pairs[0] ) === 'Yup.', 'Renders positive block when items are equal, exact check' );
+	t.ok( tpl2( data.pairs[1] ) === 'Nope.', 'Renders inverse block when items are equal, of different types, exact check' );
 	var tpl3 = Handlebars.compile('{{^equal left right}}Yup.{{else}}Nope.{{/equal}}');
-	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders inverse block when items are inequal, inverse is used' );
+	t.ok( tpl3( data.pairs[2] ) === 'Yup.', 'Renders inverse block when items are inequal, inverse is used' );
+	var tpl_context = Handlebars.compile('{{#equal 1 1}}{{context}}{{/equal}}');
+	t.ok( tpl_context( data ) === 'confirmed', 'executes block in parent context' );
 });
 
 test( 'greater', function( t ){
-	t.plan(7);
-	var data = [{
-		left: 2,
-		right: 1
-	}, {
-		left: 1,
-		right: 2
-	}, {
-		left: 2,
-		right: 2
-	}];
+	t.plan(8);
+	var data = {
+		pairs: [{
+			left: 2,
+			right: 1
+		}, {
+			left: 1,
+			right: 2
+		}, {
+			left: 2,
+			right: 2
+		}],
+		context: 'confirmed'
+	};
 	var tpl = Handlebars.compile('{{#greater left right}}Yup.{{else}}Nope.{{/greater}}');
-	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when left is greater' );
-	t.ok( tpl( data[1] ) === 'Nope.', 'Renders inverse block when left is less' );
-	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
+	t.ok( tpl( data.pairs[0] ) === 'Yup.', 'Renders positive block when left is greater' );
+	t.ok( tpl( data.pairs[1] ) === 'Nope.', 'Renders inverse block when left is less' );
+	t.ok( tpl( data.pairs[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
 	var tpl2 = Handlebars.compile('{{#greater left right "equal"}}Yup.{{else}}Nope.{{/greater}}');
-	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when left is greater, or equal check' );
-	t.ok( tpl2( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
+	t.ok( tpl2( data.pairs[0] ) === 'Yup.', 'Renders positive block when left is greater, or equal check' );
+	t.ok( tpl2( data.pairs[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
 	var tpl3 = Handlebars.compile('{{^greater left right}}Yup.{{else}}Nope.{{/greater}}');
-	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
-	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+	t.ok( tpl3( data.pairs[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
+	t.ok( tpl3( data.pairs[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+	var tpl_context = Handlebars.compile('{{#greater 2 1}}{{context}}{{/greater}}');
+	t.ok( tpl_context( data ) === 'confirmed', 'executes block in parent context' );
 });
 
 test( 'less', function( t ){
-	t.plan(7);
-	var data = [{
-		left: 1,
-		right: 2
-	}, {
-		left: 2,
-		right: 1
-	}, {
-		left: 2,
-		right: 2
-	}];
+	t.plan(8);
+	var data = {
+		pairs: [{
+			left: 1,
+			right: 2
+		}, {
+			left: 2,
+			right: 1
+		}, {
+			left: 2,
+			right: 2
+		}],
+		context: 'confirmed'
+	};
 	var tpl = Handlebars.compile('{{#less left right}}Yup.{{else}}Nope.{{/less}}');
-	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when left is less' );
-	t.ok( tpl( data[1] ) === 'Nope.', 'Renders inverse block when left is less' );
-	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
+	t.ok( tpl( data.pairs[0] ) === 'Yup.', 'Renders positive block when left is less' );
+	t.ok( tpl( data.pairs[1] ) === 'Nope.', 'Renders inverse block when left is less' );
+	t.ok( tpl( data.pairs[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
 	var tpl2 = Handlebars.compile('{{#less left right "equal"}}Yup.{{else}}Nope.{{/less}}');
-	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when left is less, or equal check' );
-	t.ok( tpl2( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
+	t.ok( tpl2( data.pairs[0] ) === 'Yup.', 'Renders positive block when left is less, or equal check' );
+	t.ok( tpl2( data.pairs[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
 	var tpl3 = Handlebars.compile('{{^less left right}}Yup.{{else}}Nope.{{/less}}');
-	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
-	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+	t.ok( tpl3( data.pairs[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
+	t.ok( tpl3( data.pairs[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+	var tpl_context = Handlebars.compile('{{#less 1 2}}{{context}}{{/less}}');
+	t.ok( tpl_context( data ) === 'confirmed', 'executes block in parent context' );
 });
 
 // Number helpers
