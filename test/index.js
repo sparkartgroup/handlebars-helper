@@ -262,27 +262,32 @@ test( 'equal', function( t ){
 });
 
 test( 'greater', function( t ){
-	t.plan(7);
-	var data = [{
-		left: 2,
-		right: 1
-	}, {
-		left: 1,
-		right: 2
-	}, {
-		left: 2,
-		right: 2
-	}];
+	t.plan(8);
+	var data = {
+		pairs: [{
+			left: 2,
+			right: 1
+		}, {
+			left: 1,
+			right: 2
+		}, {
+			left: 2,
+			right: 2
+		}],
+		context: 'confirmed'
+	};
 	var tpl = Handlebars.compile('{{#greater left right}}Yup.{{else}}Nope.{{/greater}}');
-	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when left is greater' );
-	t.ok( tpl( data[1] ) === 'Nope.', 'Renders inverse block when left is less' );
-	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
+	t.ok( tpl( data.pairs[0] ) === 'Yup.', 'Renders positive block when left is greater' );
+	t.ok( tpl( data.pairs[1] ) === 'Nope.', 'Renders inverse block when left is less' );
+	t.ok( tpl( data.pairs[2] ) === 'Nope.', 'Renders inverse block when left and right are equal' );
 	var tpl2 = Handlebars.compile('{{#greater left right "equal"}}Yup.{{else}}Nope.{{/greater}}');
-	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when left is greater, or equal check' );
-	t.ok( tpl2( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
+	t.ok( tpl2( data.pairs[0] ) === 'Yup.', 'Renders positive block when left is greater, or equal check' );
+	t.ok( tpl2( data.pairs[2] ) === 'Yup.', 'Renders positive block when left and right are equal, or equal check' );
 	var tpl3 = Handlebars.compile('{{^greater left right}}Yup.{{else}}Nope.{{/greater}}');
-	t.ok( tpl3( data[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
-	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+	t.ok( tpl3( data.pairs[1] ) === 'Yup.', 'Renders positive block when left is less, inverse is used' );
+	t.ok( tpl3( data.pairs[2] ) === 'Yup.', 'Renders positive block when left and right are equal, inverse is used' );
+	var tpl_context = Handlebars.compile('{{#greater 2 1}}{{context}}{{/greater}}');
+	t.ok( tpl_context( data ) === 'confirmed', 'executes block in parent context' );
 });
 
 test( 'less', function( t ){
