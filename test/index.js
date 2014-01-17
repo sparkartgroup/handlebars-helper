@@ -234,26 +234,31 @@ test( 'formatDate', function( t ){
 // Equality helpers
 
 test( 'equal', function( t ){
-	t.plan(6);
-	var data = [{
-		left: 1,
-		right: 1
-	}, {
-		left: 1,
-		right: '1'
-	}, {
-		left: 1,
-		right: 2
-	}];
+	t.plan(7);
+	var data = {
+		pairs: [{
+			left: 1,
+			right: 1
+		}, {
+			left: 1,
+			right: '1'
+		}, {
+			left: 1,
+			right: 2
+		}],
+		context: 'confirmed'
+	};
 	var tpl = Handlebars.compile('{{#equal left right}}Yup.{{else}}Nope.{{/equal}}');
-	t.ok( tpl( data[0] ) === 'Yup.', 'Renders positive block when items are equal' );
-	t.ok( tpl( data[1] ) === 'Yup.', 'Renders positive block when items are equal, of different types' );
-	t.ok( tpl( data[2] ) === 'Nope.', 'Renders inverse block when items are inequal' );
+	t.ok( tpl( data.pairs[0] ) === 'Yup.', 'Renders positive block when items are equal' );
+	t.ok( tpl( data.pairs[1] ) === 'Yup.', 'Renders positive block when items are equal, of different types' );
+	t.ok( tpl( data.pairs[2] ) === 'Nope.', 'Renders inverse block when items are inequal' );
 	var tpl2 = Handlebars.compile('{{#equal left right "exact"}}Yup.{{else}}Nope.{{/equal}}');
-	t.ok( tpl2( data[0] ) === 'Yup.', 'Renders positive block when items are equal, exact check' );
-	t.ok( tpl2( data[1] ) === 'Nope.', 'Renders inverse block when items are equal, of different types, exact check' );
+	t.ok( tpl2( data.pairs[0] ) === 'Yup.', 'Renders positive block when items are equal, exact check' );
+	t.ok( tpl2( data.pairs[1] ) === 'Nope.', 'Renders inverse block when items are equal, of different types, exact check' );
 	var tpl3 = Handlebars.compile('{{^equal left right}}Yup.{{else}}Nope.{{/equal}}');
-	t.ok( tpl3( data[2] ) === 'Yup.', 'Renders inverse block when items are inequal, inverse is used' );
+	t.ok( tpl3( data.pairs[2] ) === 'Yup.', 'Renders inverse block when items are inequal, inverse is used' );
+	var tpl_context = Handlebars.compile('{{#equal 1 1}}{{context}}{{/equal}}');
+	t.ok( tpl_context( data ) === 'confirmed', 'executes block in parent context' );
 });
 
 test( 'greater', function( t ){
