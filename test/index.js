@@ -116,7 +116,7 @@ test( 'last', function( t ){
 	var tpl2 = Handlebars.compile('{{#last this 2}}{{this}} {{/last}}');
 	t.ok( tpl2( array ) == 'Liquid Solidus ', 'renders data within block twice with last two items as context' );
 	var tpl3 = Handlebars.compile('{{#last this 5}}{{this}} {{/last}}');
-	t.ok( tpl3( array ) == 'Solid Liquid Solidus', 'renders data within block even if count is higher than length' );
+	t.ok( tpl3( array ) == 'Solid Liquid Solidus ', 'renders data within block even if count is higher than length' );
 });
 
 test( 'between', function( t ){
