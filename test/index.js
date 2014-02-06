@@ -104,12 +104,12 @@ test( 'first', function( t ){
 		two: 'Liquid',
 		three: 'Solidus'
 	};
-	t.ok( tpl( array ) == 'Solid ', 'renders data within block one time with first item as context, object' );
-	t.ok( tpl2( array ) == 'Solid Liquid ', 'renders data within block twice with first two items as context, object' );
+	t.ok( tpl( object ) == 'Solid ', 'renders data within block one time with first item as context, object' );
+	t.ok( tpl2( object ) == 'Solid Liquid ', 'renders data within block twice with first two items as context, object' );
 });
 
 test( 'last', function( t ){
-	t.plan(3);
+	t.plan(5);
 	var array = ['Solid', 'Liquid', 'Solidus'];
 	var tpl = Handlebars.compile('{{#last this}}{{this}} {{/last}}');
 	t.ok( tpl( array ) == 'Solidus ', 'renders data within block one time with last item as context' );
@@ -117,6 +117,13 @@ test( 'last', function( t ){
 	t.ok( tpl2( array ) == 'Liquid Solidus ', 'renders data within block twice with last two items as context' );
 	var tpl3 = Handlebars.compile('{{#last this 5}}{{this}} {{/last}}');
 	t.ok( tpl3( array ) == 'Solid Liquid Solidus ', 'renders data within block even if count is higher than length' );
+	var object = {
+		one: 'Solid',
+		two: 'Liquid',
+		three: 'Solidus'
+	};
+	t.ok( tpl( object ) === 'Solidus ', 'renders data within block one time with last item as context, object' );
+	t.ok( tpl2( object ) === 'Liquid Solidus ', 'renders data within block twice with last two items as context, object');
 });
 
 test( 'between', function( t ){
