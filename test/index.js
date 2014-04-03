@@ -343,27 +343,14 @@ test( 'times', function( t ){
 });
 
 test( 'add', function( t ){
-	t.plan(5);
-	var data = [{
-		left: 1,
-		right: 2
-	}, {
-		left: -1,
-		right: 1
-	}, {
-		left: -1,
-		right: -2
-	}, {
-		left: '1',
-		right: '2'
-	}, {
-		left: '1',
-		right: 2
-	}];
-	var tpl = Handlebars.compile('{{add left right}}');
-	t.ok( tpl( data[0] ) === '3', 'Add positive integers' );
-	t.ok( tpl( data[1] ) === '0', 'Add negative and positive integers' );
-	t.ok( tpl( data[2] ) === '-3', 'Add negative integers' );
-	t.ok( tpl( data[3] ) === '3', 'Parse and add strings' );
-	t.ok( tpl( data[4] ) === '3', 'Parse a string and add it to an integer' );
+	t.plan(7);
+	var tpl = Handlebars.compile('{{add this.[0] this.[1]}}');
+	t.equal( tpl( [1,2] ), '3', 'Add positive integers' );
+	t.equal( tpl( [-1,1] ), '0', 'Add negative and positive integers' );
+	t.equal( tpl( [-1,-2] ), '-3', 'Add negative integers' );
+	t.equal( tpl( ['1','2'] ), '3', 'Parse and add strings' );
+	t.equal( tpl( ['1',2] ), '3', 'Parse a string and add it to an integer' );
+	t.equal( tpl( [1,1.5] ), '2.5', 'Adds floating point numbers' );
+	var tpl2 = Handlebars.compile('{{add this.[0] this.[1] this.[2]}}');
+	t.equal( tpl2( [1,2,3] ), '6', 'Adds three numbers' );
 });
