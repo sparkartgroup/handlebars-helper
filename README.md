@@ -534,3 +534,23 @@ Subtract numbers from one another. Anything that's not a number will be converte
 1.5 - 1 = 0.5
 1 - 2 - 3 = -4
 ```
+
+### Multiply
+
+Multiply numbers. Anything that's not a number will be converted to a number, then multiplied.
+
+```handlebars
+2 * 2 = {{multiply 2 2}}
+-2 * 2 = {{multiply -2 2}}
+"2" * 2 = {{multiply "2" 2}}
+1.5 * 2 = {{multiply 1.5 2}}
+2 * 2 * 2 = {{multiply 2 2 2}}
+```
+
+```
+2 * 2 = 4
+-2 * 2 = -4
+"2" * 2 = 4
+1.5 * 2 = 3
+2 * 2 * 2 = 8
+```
