@@ -347,7 +347,7 @@ test( 'times', function( t ){
 });
 
 test( 'add', function( t ){
-	t.plan(7);
+	t.plan(9);
 	var tpl = Handlebars.compile('{{add this.[0] this.[1]}}');
 	t.equal( tpl( [1,2] ), '3', 'Add positive integers' );
 	t.equal( tpl( [-1,1] ), '0', 'Add negative and positive integers' );
@@ -355,6 +355,8 @@ test( 'add', function( t ){
 	t.equal( tpl( ['1','2'] ), '3', 'Parse and add strings' );
 	t.equal( tpl( ['1',2] ), '3', 'Parse a string and add it to an integer' );
 	t.equal( tpl( [1,1.5] ), '2.5', 'Adds floating point numbers' );
+	t.equal( tpl( [undefined,1] ), '1', 'Converts undefined into 0, then adds' );
+	t.equal( tpl( [null,1] ), '1', 'Converts null into 0, then adds' );
 	var tpl2 = Handlebars.compile('{{add this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [1,2,3] ), '6', 'Adds three numbers' );
 });
