@@ -29,7 +29,8 @@
     "grunt-contrib-uglify": "~0.2.4",
     "handlebars": "~1.0.12",
     "tape": "~1.1.1",
-    "JSON": "^1.0.0"
+    "JSON": "^1.0.0",
+    "lodash.isarray": "^2.4.1"
   },
   "dependencies": {
     "strftime": "~0.7.0",
