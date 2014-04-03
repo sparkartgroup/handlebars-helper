@@ -362,7 +362,7 @@ test( 'subtract', function( t ){
 	t.equal( tpl( [-1,1] ), '-2', 'Subtract negative and positive integers' );
 	t.equal( tpl( [-1,-2] ), '1', 'Subtract negative integers' );
 	t.equal( tpl( ['2','1'] ), '1', 'Parse and subtract strings' );
-	t.equal( tpl( ['2',1] ), '3', 'Parse a string and subtract it from an integer' );
+	t.equal( tpl( ['2',1] ), '1', 'Parse a string and subtract it from an integer' );
 	t.equal( tpl( [2,1.5] ), '0.5', 'Subtracts floating point numbers' );
 	var tpl2 = Handlebars.compile('{{subtract this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [6,2,1] ), '3', 'Subtracts three numbers' );
