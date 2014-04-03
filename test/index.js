@@ -367,3 +367,16 @@ test( 'subtract', function( t ){
 	var tpl2 = Handlebars.compile('{{subtract this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [6,2,1] ), '3', 'Subtracts three numbers' );
 });
+
+test( 'multiply', function( t ){
+	t.plan(7);
+	var tpl = Handlebars.compile('{{multiply this.[0] this.[1]}}');
+	t.equal( tpl( [2,1] ), '2', 'Multiply positive integers' );
+	t.equal( tpl( [-1,1] ), '-1', 'Multiply negative and positive integers' );
+	t.equal( tpl( [-1,-2] ), '2', 'Multiply negative integers' );
+	t.equal( tpl( ['2','1'] ), '2', 'Parse and multiply strings' );
+	t.equal( tpl( ['2',1] ), '2', 'Parse a string and multiply it from an integer' );
+	t.equal( tpl( [2,1.5] ), '3', 'Multiplys floating point numbers' );
+	var tpl2 = Handlebars.compile('{{multiply this.[0] this.[1] this.[2]}}');
+	t.equal( tpl2( [6,2,3] ), '36', 'Multiplys three numbers' );
+});
