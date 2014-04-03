@@ -380,3 +380,16 @@ test( 'multiply', function( t ){
 	var tpl2 = Handlebars.compile('{{multiply this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [6,2,3] ), '36', 'Multiplys three numbers' );
 });
+
+test( 'divide', function( t ){
+	t.plan(7);
+	var tpl = Handlebars.compile('{{divide this.[0] this.[1]}}');
+	t.equal( tpl( [4,2] ), '2', 'Divide positive integers' );
+	t.equal( tpl( [-4,2] ), '-2', 'Divide negative and positive integers' );
+	t.equal( tpl( [-4,-2] ), '2', 'Divide negative integers' );
+	t.equal( tpl( ['4','2'] ), '2', 'Parse and divide strings' );
+	t.equal( tpl( ['4',2] ), '2', 'Parse a string and divide it from an integer' );
+	t.equal( tpl( [2.5,0.5] ), '5', 'Divides floating point numbers' );
+	var tpl2 = Handlebars.compile('{{divide this.[0] this.[1] this.[2]}}');
+	t.equal( tpl2( [18,3,2] ), '3', 'Divides three numbers' );
+});
