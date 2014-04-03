@@ -1,3 +1,7 @@
+// Include JSON methods if browser doesn't already have them
+var JSON2 = require('JSON');
+JSON = JSON || JSON2;
+
 var assert = require('assert');
 var test = require('tape');
 var Handlebars = require('handlebars');

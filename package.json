@@ -28,7 +28,8 @@
     "grunt-browserify": "~1.2.4",
     "grunt-contrib-uglify": "~0.2.4",
     "handlebars": "~1.0.12",
-    "tape": "~1.1.1"
+    "tape": "~1.1.1",
+    "JSON": "^1.0.0"
   },
   "dependencies": {
     "strftime": "~0.7.0",
