@@ -362,7 +362,7 @@ test( 'add', function( t ){
 });
 
 test( 'subtract', function( t ){
-	t.plan(7);
+	t.plan(9);
 	var tpl = Handlebars.compile('{{subtract this.[0] this.[1]}}');
 	t.equal( tpl( [2,1] ), '1', 'Subtract positive integers' );
 	t.equal( tpl( [-1,1] ), '-2', 'Subtract negative and positive integers' );
@@ -370,6 +370,8 @@ test( 'subtract', function( t ){
 	t.equal( tpl( ['2','1'] ), '1', 'Parse and subtract strings' );
 	t.equal( tpl( ['2',1] ), '1', 'Parse a string and subtract it from an integer' );
 	t.equal( tpl( [2,1.5] ), '0.5', 'Subtracts floating point numbers' );
+	t.equal( tpl( [1,undefined] ), '1', 'Converts undefined into 0, then subtracts' );
+	t.equal( tpl( [1,null] ), '1', 'Converts null into 0, then subtracts' );
 	var tpl2 = Handlebars.compile('{{subtract this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [6,2,1] ), '3', 'Subtracts three numbers' );
 });
