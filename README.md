@@ -514,3 +514,23 @@ Add numbers together. Anything that's not a number will be converted to a number
 1.5 + 1 = 2.5
 1 + 2 + 3 = 6
 ```
+
+### Subtract
+
+Subtract numbers from one another. Anything that's not a number will be converted to a number, then subtracted.
+
+```handlebars
+1 - 2 = {{subtract 1 2}}
+-1 - 2 = {{subtract -1 2}}
+"1" - 2 = {{subtract "1" 2}}
+1.5 - 1 = {{subtract 1.5 1}}
+1 - 2 - 3 = {{subtract 1 2 3}}
+```
+
+```
+1 - 2 = -1
+-1 - 2 = -3
+"1" - 2 = -1
+1.5 - 1 = 0.5
+1 - 2 - 3 = -4
+```
