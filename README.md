@@ -554,3 +554,23 @@ Multiply numbers. Anything that's not a number will be converted to a number, th
 1.5 * 2 = 3
 2 * 2 * 2 = 8
 ```
+
+### Divide
+
+Divide numbers. Anything that's not a number will be converted to a number, then divided.
+
+```handlebars
+4 ÷ 2 = {{divide 4 2}}
+-4 ÷ 2 = {{divide -4 2}}
+"4" ÷ 2 = {{divide "4" 2}}
+3 ÷ 1.5 = {{divide 3 1.5}}
+8 ÷ 2 ÷ 2 = {{divide 8 2 2}}
+```
+
+```
+4 ÷ 2 = 2
+-4 ÷ 2 = -2
+"4" ÷ 2 = 2
+3 ÷ 1.5 = 2
+8 ÷ 2 ÷ 2 = 2
+```
