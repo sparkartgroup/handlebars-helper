@@ -494,3 +494,83 @@ Do this 5 times: 1 2 3 4 5
 Do this 1 time, starting from 0: 0 
 Do this 5 times, starting from 0: 0 1 2 3 4 
 ```
+
+### Add
+
+Add numbers together. Anything that's not a number will be converted to a number, then added.
+
+```handlebars
+1 + 2 = {{add 1 2}}
+-1 + 2 = {{add -1 2}}
+"1" + 2 = {{add "1" 2}}
+1.5 + 1 = {{add 1.5 1}}
+1 + 2 + 3 = {{add 1 2 3}}
+```
+
+```
+1 + 2 = 3
+-1 + 2 = 1
+"1" + 2 = 3
+1.5 + 1 = 2.5
+1 + 2 + 3 = 6
+```
+
+### Subtract
+
+Subtract numbers from one another. Anything that's not a number will be converted to a number, then subtracted.
+
+```handlebars
+1 - 2 = {{subtract 1 2}}
+-1 - 2 = {{subtract -1 2}}
+"1" - 2 = {{subtract "1" 2}}
+1.5 - 1 = {{subtract 1.5 1}}
+1 - 2 - 3 = {{subtract 1 2 3}}
+```
+
+```
+1 - 2 = -1
+-1 - 2 = -3
+"1" - 2 = -1
+1.5 - 1 = 0.5
+1 - 2 - 3 = -4
+```
+
+### Multiply
+
+Multiply numbers. Anything that's not a number will be converted to a number, then multiplied.
+
+```handlebars
+2 * 2 = {{multiply 2 2}}
+-2 * 2 = {{multiply -2 2}}
+"2" * 2 = {{multiply "2" 2}}
+1.5 * 2 = {{multiply 1.5 2}}
+2 * 2 * 2 = {{multiply 2 2 2}}
+```
+
+```
+2 * 2 = 4
+-2 * 2 = -4
+"2" * 2 = 4
+1.5 * 2 = 3
+2 * 2 * 2 = 8
+```
+
+### Divide
+
+Divide numbers. Anything that's not a number will be converted to a number, then divided.
+
+```handlebars
+4 ÷ 2 = {{divide 4 2}}
+-4 ÷ 2 = {{divide -4 2}}
+"4" ÷ 2 = {{divide "4" 2}}
+3 ÷ 1.5 = {{divide 3 1.5}}
+8 ÷ 2 ÷ 2 = {{divide 8 2 2}}
+```
+
+```
+4 ÷ 2 = 2
+-4 ÷ 2 = -2
+"4" ÷ 2 = 2
+3 ÷ 1.5 = 2
+8 ÷ 2 ÷ 2 = 2
+```
