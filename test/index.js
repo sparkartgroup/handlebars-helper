@@ -341,3 +341,29 @@ test( 'times', function( t ){
 	t.ok( tpl2(1) === '0 ', 'Renders block 1 times, zero based' );
 	t.ok( tpl2(5) === '0 1 2 3 4 ', 'Renders block 5 times, zero based' );
 });
+
+test( 'add', function( t ){
+	t.plan(5);
+	var data = [{
+		left: 1,
+		right: 2
+	}, {
+		left: -1,
+		right: 1
+	}, {
+		left: -1,
+		right: -2
+	}, {
+		left: '1',
+		right: '2'
+	}, {
+		left: '1',
+		right: 2
+	}];
+	var tpl = Handlebars.compile('{{add left right}}');
+	t.ok( tpl( data[0] ) === '3', 'Add positive integers' );
+	t.ok( tpl( data[1] ) === '0', 'Add negative and positive integers' );
+	t.ok( tpl( data[2] ) === '-3', 'Add negative integers' );
+	t.ok( tpl( data[3] ) === '3', 'Parse and add strings' );
+	t.ok( tpl( data[4] ) === '3', 'Parse a string and add it to an integer' );
+});
