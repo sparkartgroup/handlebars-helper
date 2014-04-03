@@ -494,3 +494,23 @@ Do this 5 times: 1 2 3 4 5
 Do this 1 time, starting from 0: 0 
 Do this 5 times, starting from 0: 0 1 2 3 4 
 ```
+
+### Add
+
+Add numbers together. Anything that's not a number will be converted to a number, then added.
+
+```handlebars
+1 + 2 = {{add 1 2}}
+-1 + 2 = {{add -1 2}}
+"1" + 2 = {{add "1" 2}}
+1.5 + 1 = {{add 1.5 1}}
+1 + 2 + 3 = {{add 1 2 3}}
+```
+
+```
+1 + 2 = 3
+-1 + 2 = 1
+"1" + 2 = 3
+1.5 + 1 = 2.5
+1 + 2 + 3 = 6
+```
