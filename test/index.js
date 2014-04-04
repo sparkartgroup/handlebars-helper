@@ -392,7 +392,7 @@ test( 'multiply', function( t ){
 });
 
 test( 'divide', function( t ){
-	t.plan(7);
+	t.plan(9);
 	var tpl = Handlebars.compile('{{divide this.[0] this.[1]}}');
 	t.equal( tpl( [4,2] ), '2', 'Divide positive integers' );
 	t.equal( tpl( [-4,2] ), '-2', 'Divide negative and positive integers' );
@@ -400,6 +400,8 @@ test( 'divide', function( t ){
 	t.equal( tpl( ['4','2'] ), '2', 'Parse and divide strings' );
 	t.equal( tpl( ['4',2] ), '2', 'Parse a string and divide it from an integer' );
 	t.equal( tpl( [2.5,0.5] ), '5', 'Divides floating point numbers' );
+	t.equal( tpl( [1,undefined] ), 'Infinity', 'Converts undefined into 0, then divides' );
+	t.equal( tpl( [null,1] ), '0', 'Converts null into 0, then divides' );
 	var tpl2 = Handlebars.compile('{{divide this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [18,3,2] ), '3', 'Divides three numbers' );
 });
