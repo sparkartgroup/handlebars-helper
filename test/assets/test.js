@@ -5,7 +5,7 @@ module.exports = function(){
 	var numbers = Array.prototype.slice.call( arguments, 0, -1 );
 	var result = 0;
 	for( var i = numbers.length - 1; i >= 0; i-- ){
-		result += parseFloat( numbers[i], 10 );
+		result += parseFloat( numbers[i], 10 ) || 0;
 	}
 	return result;
 };
@@ -71,7 +71,7 @@ module.exports = function(){
 	var numbers = Array.prototype.slice.call( arguments, 1, -1 );
 	var result = arguments[0];
 	for( var i = numbers.length - 1; i >= 0; i-- ){
-		result /= parseFloat( numbers[i], 10 );
+		result /= parseFloat( numbers[i], 10 ) || 0;
 	}
 	return result;
 };
@@ -185,7 +185,7 @@ module.exports = function(){
 	var numbers = Array.prototype.slice.call( arguments, 1, -1 );
 	var result = arguments[0];
 	for( var i = numbers.length - 1; i >= 0; i-- ){
-		result *= parseFloat( numbers[i], 10 );
+		result *= parseFloat( numbers[i], 10 ) || 0;
 	}
 	return result;
 };
@@ -239,7 +239,7 @@ module.exports = function(){
 	var numbers = Array.prototype.slice.call( arguments, 1, -1 );
 	var result = parseFloat( arguments[0], 10 );
 	for( var i = numbers.length - 1; i >= 0; i-- ){
-		result -= parseFloat( numbers[i], 10 );
+		result -= parseFloat( numbers[i], 10 ) || 0;
 	}
 	return result;
 };
@@ -15114,7 +15114,7 @@ test( 'times', function( t ){
 });
 
 test( 'add', function( t ){
-	t.plan(7);
+	t.plan(9);
 	var tpl = Handlebars.compile('{{add this.[0] this.[1]}}');
 	t.equal( tpl( [1,2] ), '3', 'Add positive integers' );
 	t.equal( tpl( [-1,1] ), '0', 'Add negative and positive integers' );
@@ -15122,12 +15122,14 @@ test( 'add', function( t ){
 	t.equal( tpl( ['1','2'] ), '3', 'Parse and add strings' );
 	t.equal( tpl( ['1',2] ), '3', 'Parse a string and add it to an integer' );
 	t.equal( tpl( [1,1.5] ), '2.5', 'Adds floating point numbers' );
+	t.equal( tpl( [undefined,1] ), '1', 'Converts undefined into 0, then adds' );
+	t.equal( tpl( [null,1] ), '1', 'Converts null into 0, then adds' );
 	var tpl2 = Handlebars.compile('{{add this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [1,2,3] ), '6', 'Adds three numbers' );
 });
 
 test( 'subtract', function( t ){
-	t.plan(7);
+	t.plan(9);
 	var tpl = Handlebars.compile('{{subtract this.[0] this.[1]}}');
 	t.equal( tpl( [2,1] ), '1', 'Subtract positive integers' );
 	t.equal( tpl( [-1,1] ), '-2', 'Subtract negative and positive integers' );
@@ -15135,12 +15137,14 @@ test( 'subtract', function( t ){
 	t.equal( tpl( ['2','1'] ), '1', 'Parse and subtract strings' );
 	t.equal( tpl( ['2',1] ), '1', 'Parse a string and subtract it from an integer' );
 	t.equal( tpl( [2,1.5] ), '0.5', 'Subtracts floating point numbers' );
+	t.equal( tpl( [1,undefined] ), '1', 'Converts undefined into 0, then subtracts' );
+	t.equal( tpl( [1,null] ), '1', 'Converts null into 0, then subtracts' );
 	var tpl2 = Handlebars.compile('{{subtract this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [6,2,1] ), '3', 'Subtracts three numbers' );
 });
 
 test( 'multiply', function( t ){
-	t.plan(7);
+	t.plan(9);
 	var tpl = Handlebars.compile('{{multiply this.[0] this.[1]}}');
 	t.equal( tpl( [2,1] ), '2', 'Multiply positive integers' );
 	t.equal( tpl( [-1,1] ), '-1', 'Multiply negative and positive integers' );
@@ -15148,12 +15152,14 @@ test( 'multiply', function( t ){
 	t.equal( tpl( ['2','1'] ), '2', 'Parse and multiply strings' );
 	t.equal( tpl( ['2',1] ), '2', 'Parse a string and multiply it from an integer' );
 	t.equal( tpl( [2,1.5] ), '3', 'Multiplys floating point numbers' );
+	t.equal( tpl( [1,undefined] ), '0', 'Converts undefined into 0, then multiplies' );
+	t.equal( tpl( [1,null] ), '0', 'Converts null into 0, then multiplies' );
 	var tpl2 = Handlebars.compile('{{multiply this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [6,2,3] ), '36', 'Multiplys three numbers' );
 });
 
 test( 'divide', function( t ){
-	t.plan(7);
+	t.plan(9);
 	var tpl = Handlebars.compile('{{divide this.[0] this.[1]}}');
 	t.equal( tpl( [4,2] ), '2', 'Divide positive integers' );
 	t.equal( tpl( [-4,2] ), '-2', 'Divide negative and positive integers' );
@@ -15161,6 +15167,8 @@ test( 'divide', function( t ){
 	t.equal( tpl( ['4','2'] ), '2', 'Parse and divide strings' );
 	t.equal( tpl( ['4',2] ), '2', 'Parse a string and divide it from an integer' );
 	t.equal( tpl( [2.5,0.5] ), '5', 'Divides floating point numbers' );
+	t.equal( tpl( [1,undefined] ), 'Infinity', 'Converts undefined into 0, then divides' );
+	t.equal( tpl( [null,1] ), '0', 'Converts null into 0, then divides' );
 	var tpl2 = Handlebars.compile('{{divide this.[0] this.[1] this.[2]}}');
 	t.equal( tpl2( [18,3,2] ), '3', 'Divides three numbers' );
 });
