@@ -176,14 +176,24 @@ test( 'where', function( t ){
 });
 
 test( 'shuffle', function( t ){
-	t.plan(1);
+	t.plan(2);
 	var array = ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake'];
-	var tpl = Handlebars.compile('{{#shuffle this}}{{this}},{{/shuffle}}');
-	var result = tpl( array );
-	var result_array = result.substring( 0, result.length - 1 ).split(',');
+	function shuffle(array){
+		var tpl = Handlebars.compile('{{#shuffle this}}{{this}},{{/shuffle}}');
+		var result = tpl( array );
+		return result.substring( 0, result.length - 1 ).split(',');
+	}
+	var result_array = shuffle(array);
 	result_array.sort();
 	array.sort();
 	t.equal( result_array.join(), array.join(), 'shuffled collection contains same elements as original collection' );
+	var firstElementDifferent = false;
+	for (var i=0; i<100; i++) {
+		var firstElement = shuffle(array)[0];
+		array.sort();
+		firstElementDifferent = firstElementDifferent || firstElement !== array[0];
+	}
+	t.true( firstElementDifferent, 'shuffled collection should be eventually different than the original' );
 });
 
 test( 'reverse', function( t ){
