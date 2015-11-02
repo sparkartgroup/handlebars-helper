@@ -230,8 +230,8 @@ test( 'formatDate', function( t ){
 		'2013-09-30T15:00:00.340Z',
 		'2013/09/30 15:00:00 +0000',
 		'Mon Sep 30 2013 15:00:00 GMT-0700 (PDT)',
-		1380578400000,
-		'1380578400000'
+		1380578400000 + new Date().getTimezoneOffset() * MINUTE,
+		String(1380578400000 + new Date().getTimezoneOffset() * MINUTE)
 	];
 	var tpl = Handlebars.compile('{{formatDate this "%A, %B %o %Y"}}');
 	t.equal( tpl( dates[0] ), 'Monday, September 30th 2013', 'date successfully formatted' );
