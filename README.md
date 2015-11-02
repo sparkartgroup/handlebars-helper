@@ -282,6 +282,13 @@ Shuffled array: {{#shuffle array}}{{this}} {{/shuffle}}
 Shuffled array: Vulcan Raven Psycho Mantis Revolver Ocelot Liquid Snake Sniper Wolf Decoy Octopus
 ```
 
+Optionally a seed can be passed so that the returned array is reproducible. Please use a seed other than 0.
+
+```handlebars
+Shuffled array: {{#shuffle array seed=1}}{{this}} {{/shuffle}}
+```
+
+
 ### Reverse
 
 Loop through an array in reverse order.

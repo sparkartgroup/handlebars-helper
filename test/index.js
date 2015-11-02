@@ -176,14 +176,47 @@ test( 'where', function( t ){
 });
 
 test( 'shuffle', function( t ){
-	t.plan(1);
+	t.plan(4);
 	var array = ['Psycho Mantis','Sniper Wolf', 'Vulcan Raven', 'Decoy Octopus', 'Revolver Ocelot', 'Liquid Snake'];
-	var tpl = Handlebars.compile('{{#shuffle this}}{{this}},{{/shuffle}}');
-	var result = tpl( array );
-	var result_array = result.substring( 0, result.length - 1 ).split(',');
+	function shuffle(array){
+		var tpl = Handlebars.compile('{{#shuffle this}}{{this}},{{/shuffle}}');
+		var result = tpl( array );
+		return result.substring( 0, result.length - 1 ).split(',');
+	}
+	var result_array = shuffle(array);
 	result_array.sort();
 	array.sort();
 	t.equal( result_array.join(), array.join(), 'shuffled collection contains same elements as original collection' );
+	var firstElementDifferent = false;
+	for (var i=0; i<100; i++) {
+		var firstElement = shuffle(array)[0];
+		array.sort();
+		firstElementDifferent = firstElementDifferent || firstElement !== array[0];
+	}
+	t.true( firstElementDifferent, 'shuffled collection should be eventually different than the original' );
+
+	var shuffledFirst = shuffle(array)[0];
+	firstElementDifferent = false;
+	for (var i=0; i<100; i++) {
+		var firstElement = shuffle(array)[0];
+		firstElementDifferent = firstElementDifferent || firstElement !== shuffledFirst;
+	}
+	t.true( firstElementDifferent, 'unseeded shuffle should produce different result eventually' );
+
+	function shuffleWithSeed(array, seed){
+		var tpl = Handlebars.compile('{{#shuffle this seed='+seed+'}}{{this}},{{/shuffle}}');
+		var result = tpl( array );
+		return result.substring( 0, result.length - 1 ).split(',');
+	}
+	array.sort();
+	var shuffledFirst = shuffleWithSeed(array, 1)[0];
+	firstElementDifferent = false;
+	for (var i=0; i<100; i++) {
+		array.sort();
+		var firstElement = shuffleWithSeed(array, 1)[0];
+		firstElementDifferent = firstElementDifferent || firstElement !== shuffledFirst;
+	}
+	t.false( firstElementDifferent, 'seeded shuffle should always produce the same result' );
 });
 
 test( 'reverse', function( t ){
@@ -230,8 +263,8 @@ test( 'formatDate', function( t ){
 		'2013-09-30T15:00:00.340Z',
 		'2013/09/30 15:00:00 +0000',
 		'Mon Sep 30 2013 15:00:00 GMT-0700 (PDT)',
-		1380578400000,
-		'1380578400000'
+		1380578400000 + new Date().getTimezoneOffset() * MINUTE,
+		String(1380578400000 + new Date().getTimezoneOffset() * MINUTE)
 	];
 	var tpl = Handlebars.compile('{{formatDate this "%A, %B %o %Y"}}');
 	t.equal( tpl( dates[0] ), 'Monday, September 30th 2013', 'date successfully formatted' );
